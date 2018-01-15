@@ -15,7 +15,7 @@ addUser(admin);
 var events={"events":[]};
 
 
-var baseURL = "";
+var baseURL = "/";
 
 
 function addUser(user)
@@ -37,9 +37,7 @@ function addUser(user)
 
 console.log('Server running at http://127.0.0.1:8080/');
 
-app.get("/", function(req, resp){
-	resp.redirect(baseURL);
-});
+
 
 
 app.get(baseURL, function(req, resp){
