@@ -40,7 +40,7 @@ console.log('Server running at http://127.0.0.1:8080/');
 
 
 
-app.get(baseURL, function(req, resp){
+app.get("/", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/index.html"))
 });
