@@ -11,35 +11,11 @@
 
 $(document).ready(function(){
 
-	var baseURL = "/events2017"
+	var baseURL = ""
 
 	var eventsToDisplay='{"events":[]}';
 	console.log("doc ready");
-	
-	
-	function xmlValue(xmlString, character)
-	{
-	
-		console.log("xml, char is ");
-		console.log(xmlString);
-		console.log(character);
-		var opener = "<"+character+">";
-		var closer = "</"+character+">";
-		var startIndex = xmlString.indexOf(opener);
-		var endIndex = xmlString.indexOf(closer);
 
-		if (startIndex==-1 || endIndex==-1)
-		{
-			return "(error: xml property not found)"
-		}
-		else
-		{
-			return xmlString.substring(startIndex+2+character.length,endIndex);
-		}
-		
-	}
-	
-	
 	$("#loginButton").click(function()
 	{
 		var cookie = document.cookie;
@@ -116,85 +92,6 @@ $(document).ready(function(){
 				updateEvents();
 			}
 		});
-		
-		if($("#includeThirdParty").val()=="Yes")
-		{
-			console.log("were including third parties yay")
-			console.log("end date is"+endDate);
-			var dateRangeQuery="";
-			if (typeof(endDate)!="undefined" && endDate!="")
-			{
-				var startDateString=new Date(Date.parse(startDate));
-				startDateString=startDateString.toISOString().slice(0,10).replace(/-/g,"")+"00";;
-				var endDateString=new Date(Date.parse(endDate));
-				endDateString=endDateString.toISOString().slice(0,10).replace(/-/g,"")+"00";
-				var dateRangeQuery=startDateString+"-"+endDateString;
-				
-			}
-			
-			
-			var searchTitle = $("#searchTitle").val();
-			
-			if (typeof(searchTitle)!="undefined")
-			{
-				searchTitle="";
-			}
-			
-			var xmlReturned = ""
-		
-			var xhttp = new XMLHttpRequest();
-			xhttp.onreadystatechange = function()
-			{
-				if (this.readyState == 4 && this.status == 200)
-				{
-					parser = new DOMParser();
-					xmlReturned = parser.parseFromString(this.responseText,"text/xml");
-					// alert(parseInt(xmlReturned.getElementsByTagName("total_items")[0].childNodes[0].nodeValue));
-					var eventArray=xmlReturned.getElementsByTagName("events")[0];
-					
-					var eventsChildren=xmlReturned.getElementsByTagName("events")[0].childNodes;
-					
-					var externalEvents = [];
-					
-					for (var i=0; i<xmlReturned.getElementsByTagName("events")[0].childNodes.length;i++)
-					{
-						try
-						{
-							var evnt=xmlReturned.getElementsByTagName("events")[0].childNodes[i];
-							var eventAsString=(new XMLSerializer()).serializeToString(evnt);
-							
-							
-							if(!(/^\s+$/.test(eventAsString)))
-							{
-							
-							
-								var externalEventAsJson=
-								{
-									"title":xmlValue(eventAsString,"title"),
-									"url":xmlValue(eventAsString,"url"),
-									"blurb":xmlValue(eventAsString,"description"),
-									"date":xmlValue(eventAsString,"description"),
-									"img":xmlValue(xmlValue(eventAsString,"image"),"url")
-								}
-									
-								externalEvents.push(externalEventAsJson);
-								
-								//console.log("we got "+JSON.stringify(externalEventAsJson)+ "extra event");
-							}
-							
-						
-						}
-						catch(err)
-						{
-							//console.log("unsuitabe event:"+err);
-						}
-					}
-					displayExternalEvents(externalEvents)
-				}
-			};
-			xhttp.open("GET", "https://api.eventful.com/rest/events/search?app_key=KLMdRjKHvFNrWLxL&location=uk&"+"date="+dateRangeQuery+"&keywords="+searchTitle, true);
-			xhttp.send();
-		}
 	}
 	}); 
 	
@@ -371,23 +268,27 @@ $(document).ready(function(){
 
 </script>
   
-  <style>
+ <style>
     .jumbotron 
 	{
 		margin-bottom: 0;
     }
 	
-	.container {
-		/* The image used */
+	.help
+	{
+
 		background-image: url("HomelessinGravesend.jpg");
 
-		/* Full height */
-		height: 100%;
 
-		/* Center and scale the image nicely */
+		color:blue;
+		
+		border-style:solid;
+		
+
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+
 	}
    
 	container
@@ -403,11 +304,6 @@ $(document).ready(function(){
 		width:100%;
 		text-align: right;
 		
-	}
-	
-	submission
-	{
-		text-align: center;
 	}
 	
 	searchButton
@@ -453,24 +349,28 @@ $(document).ready(function(){
 	
 </script>
 
-<div class="container" id="container">
-	<div class="row">
+<div class="container">
+	
+	<div class="row" id="help">
 		<div class="col-sm-7"></div>
 		<div class="col-sm-5">
 			<button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">Home</button>
 			<button class="tablink" onclick="openPage('Newsfeed', this)" >Newsfeed</button>
-			<button class="tablink" onclick="openPage('Contact', this)">Contact</button>
+			<button class="tablink" onclick="openPage('Services', this)">Services</button>
 			<button class="tablink" onclick="openPage('About', this)">About</button>
 		</div>
 	</div>
+	
+	<br>
+
 	
 	<div class="row">
 	<div id="Home" class="tabcontent">
 	  <h3>Home</h3>
 	</div>
 
-	<div id="Contact" class="tabcontent">
-	  <h3>Contact</h3>
+	<div id="Services" class="tabcontent">
+	  <h3>Services</h3>
 
 	</div>
 
@@ -507,16 +407,12 @@ $(document).ready(function(){
 					<lb>Title/Keyword:</lb><br>
 					<lb>After:</lb><br>
 					<lb>Before:</lb><br>
-					<lb>Third party events:</lb><br>
+					
 					</div>
 					<div class="col-sm-7">
 					<input type="text" id="searchTitle"><br>
 					<input type="date" id="dateAfter"><br>
 					<input type="date" id="dateBefore"><br>
-					<select id="includeThirdParty">
-						<option value="Yes">Include</option>
-				    	<option value="No">Do not</option>
-					</select>
 					</div>
 					<div class="col-sm-1">
 					</div>
@@ -567,16 +463,6 @@ $(document).ready(function(){
 	</div>
 	</div>
 	
-</div>
-
-
-
-
-
-
-<br>
-
-<br><br>
 </div>
 </body>
 </html>

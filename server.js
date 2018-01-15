@@ -13,9 +13,9 @@ var admin = {"username":"admin","password":"concertina"};
 addUser(admin);
 
 var events={"events":[]};
-var venues={};
 
-var baseURL = "/events2017";
+
+var baseURL = "";
 
 
 function addUser(user)
@@ -98,11 +98,7 @@ app.get(baseURL+'/admin', function(req, resp){
 	}
 });
 
-app.get(baseURL+'/venues', function(req, res){
-	res.setHeader('content-type', 'application/json');
-	res.send(venues);
-	// res.sendFile(path.join(__dirname+"venues.json"))
-	});
+
 
 app.get(baseURL+'/events/search', function(req, res){
 	
@@ -204,24 +200,17 @@ app.get(baseURL+'/events/search', function(req, res){
 		
 		if(eventMatchesSearch)
 		{
-			console.log("we found a great event:"+JSON.stringify(evnt.title)+"at venue"+evnt.venue_id);
+			console.log("we found a great event:"+JSON.stringify(evnt.title));
 			console.log("formatting event, finding  venues.venues[evnt.venue_id] = " + JSON.stringify(venues.venues[evnt.venue_id]));
-			var eventVenue = venues.venues[evnt.venue_id];
-			if(typeof(eventVenue)!="undefined")
-			{
-				eventVenue.venue_id=evnt.venue_id;
-			}
+			
 			
 			finalEvent =
 			{
-				"event_id":evnt.event_id,
+				"ID":evnt.ID,
 				"title":evnt.title,
-				"blurb":evnt.blurb,
+				"description":evnt.description,
 				"date":evnt.date,
 				"url":evnt.url,
-				"venue":eventVenue
-				
-				
 			}
 			validEvents.push(evnt);
 		}
@@ -240,7 +229,7 @@ app.get(baseURL+'/events/search', function(req, res){
 	
 });
 
-app.get(baseURL+'/events/get/:event_id', function(req, res){
+app.get(baseURL+'/events/get/:ID', function(req, res){
 	
 	
 	var content = events;
@@ -248,7 +237,7 @@ app.get(baseURL+'/events/get/:event_id', function(req, res){
 	res.setHeader('content-type', 'application/json');
 	for (evnt in eventsList)
 	{
-		if (evnt.event_id == event_id)
+		if (evnt.ID == ID)
 		{
 			res.json(evnt);
 		}
@@ -256,52 +245,8 @@ app.get(baseURL+'/events/get/:event_id', function(req, res){
 	res.json({"error": "no such event"});
 });
 
-app.post(baseURL+'/venues/add', function(req, res){
-
-	console.log("adding venue with query: "+JSON.stringify(req.query));
-	
-	var content = venues;
-	
-	var howManyVenues=Object.keys(content.venues).length;
-	var newVenueAtrributeName = "v_"+(howManyVenues+1).toString()
-	
-	var venue = 
-	{
-		"name":req.query.name,
-		"postcode":req.query.postcode,
-		"town":req.query.town,
-		"url":req.query.url,
-		"icon":req.query.icon
-	};
-	
-	if(!isAuthorised(req.ip,req.query.auth_token))
-	{
-		res.status(400);
-		res.setHeader('Content-Type', 'application/json');
-		res.json({"error": "not authorised, wrong token"});
-	}
-	else
-	{
-	if (typeof(venue.name) == "undefined")
-	{
-		res.status(400);
-		res.setHeader('Content-Type', 'application/json');
-		res.json({"error": "not authorised, you must enter name"});
-	}
-	else
-	{
-		content.venues[newVenueAtrributeName]=venue;
-		console.log(content);
-		venues=content;
-		res.setHeader('Content-Type', 'application/json');
-		res.json({'status' : 'ok'});
-	}
-	}
-});
-
 app.post(baseURL+'/events/add', function(req, res){
 
-	
 	var content = events;
 	var eventsArray = content.events;
 	
@@ -316,20 +261,19 @@ app.post(baseURL+'/events/add', function(req, res){
 	
 		var evnt = 
 		{
-			"event_id":req.query.event_id,
+			"ID":req.query.ID,
 			"title":req.query.title,
-			"venue_id":req.query.venue_id,
 			"date":req.query.date,
 			"url":req.query.url,
-			"blurb":req.query.blurb
+			"description":req.query.description
 		};
 		
 		
-		if (typeof(evnt.title) == "undefined"||typeof(evnt.venue_id) == "undefined"||typeof(evnt.event_id) == "undefined"||typeof(evnt.date) == "undefined")
+		if (typeof(evnt.title) == "undefined"||typeof(evnt.ID) == "undefined"||typeof(evnt.date) == "undefined")
 		{
 		res.status(400);
 		res.setHeader('Content-Type', 'application/json');
-		res.json({"error": "not authorised, you must enter name,event_id,title,venue_id"});
+		res.json({"error": "not authorised, you must enter name,ID,title"});
 		}
 		else
 		{
@@ -346,11 +290,7 @@ app.post(baseURL+'/events/add', function(req, res){
 
 });
 
-app.post(baseURL+'/resetVenues',function(req, res){
-	resetVenues();
-	res.setHeader('Content-Type', 'application/json');
-	res.json({'status' : 'ok'});
-});
+
 
 app.post(baseURL+'/resetEvents',function(req, res){
 	resetEvents();
@@ -364,15 +304,14 @@ function resetEvents()
 	
 	events = {"events":[
 						{
-						"event_id":"e_1",
+						"ID":"1",
 						"title":"Swaledale Squeeze 2018",
-						"blurb":"The biggest and best concertina weekend in the world. Held each May in Grinton Lodge YHA, North Yorkshire",
+						"description":"The biggest and best concertina weekend in the world. Held each May in Grinton Lodge YHA, North Yorkshire",
+						"summary":"The biggest and best concertina weekend in the world",
 						"date":"2018-05-21T16:00:00Z",
 						"url":"http://www.swaledalesqueeze.org.uk",
 						"venue_id":"v_1" },
 						
-						{"event_id":"e_3","title":"Jazz guitar off","venue_id":"v_1","date":"2018-4-4","url":"http://www.guitar.com/","blurb":"it'll be jazz great"},
-						{"event_id":"e_4","title":"A Piano","venue_id":"v_2","date":"2018-2-4","url":"http://www.piano.com/","blurb":"There will be keys everytime"}
 						
 						]};
 	
@@ -380,31 +319,7 @@ function resetEvents()
 	
 }
 
-function resetVenues()
-{
-	console.log("resetting venues")
-	venues={"venues":
-	{"v_1":{
-		"name":"Grinton Lodge Youth Hostel",
-		"postcode":"DL11 6HS",
-		"town":"Richmond",
-		"url":"http://www.yha.org.uk/hostel/grinton-lodge",
-		"icon":"http://www.yha.org.uk/sites/all/themes/yha/images/logos/yha_header_logo.png"
-		},
-	"v_2":{
-		"name":"Sage Gateshead",
-		"postcode":"NE8 2JR",
-		"town":"Gateshead",
-		"url":"http://www.sagegateshead.com/",
-		"icon":"http://www.sagegateshead.com/files/images/pageimage/1683.7123dea7/630x397.fitandcrop.jpg"
-		},
-	"v_3":{"name":"City Hall","postcode":"ne297th","town":"Newcastle","url":"www.cityhall.com","icon":"http://media.ticketmaster.co.uk/tm/en-gb/dbimages/2477v.jpg"},
-	"v_4":{"name":"Metro Radio","postcode":"ne297gj","town":"Newcastle","url":"www.metro.com","icon":"https://eurohostels.s3.amazonaws.com/uploads/2016/03/Metro-Radio-Arena.jpg"}
-	}
-	};
-	// fs.writeFile('venues.json', fs.readFileSync("venuesCopy.JSON"), 'utf8');
 
-}
 
 function isAuthorised(ip,auth_token)
 {
@@ -443,7 +358,7 @@ function isAuthorised(ip,auth_token)
 }
 
 resetEvents();
-resetVenues();
+
 var port = process.env.PORT || 8080;
 app.listen(port,function()
 {
