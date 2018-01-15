@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+	
+	form
+	{
+		padding: 1em;
+	}
+	
+	lb
+	{
+		float:right;
+		height:26px;
+		width:100%;
+		text-align: right;
+		padding-top:2px;
+
+
+		
+	}
+	
+	
+	
+	submission
+	{
+		text-align: center;
+	}
+
+</style>
+<script>
+
+</script>
+</head>
+
+
+<body>
+<div class="container" style="width:100%">
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="jumbotron" >
+		<div class="container text-center">
+			<h1>Admin yo</h1> 
+		</div>
+		</div>
+	</div>
+</div>
+ 
+<div class="row">
+	<div class="col-sm-2">
+	</div>
+	<div class="col-sm-3">
+		<div class="col-sm-6">
+			<lb>event_id<br></lb>
+			<lb>title<br></lb>
+			<lb>venue<br></lb>
+			<lb>date<br></lb>
+			<lb>url<br></lb>
+			<lb>blurb<br></lb>
+		</div>
+		<div class="col-sm-6" id="inputs">
+		<input type="text" name="event_id" id="Eevent_id"><br>
+		<input type="text" name="title" id="Etitle"><br>
+		<input type="text" name="venue" id="Evenue"><br>
+		<input type="date" name="date" id="Edate"><br>
+		<input type="text" name="url" id="Eurl"><br>
+		<input type="text" name="blurb" id="Eblurb"><br>
+		<button id="submitEvent">Add Event</button>
+		</div>
+	</div>
+	<div class="col-sm-3">
+		<div class="col-sm-6">
+			<lb>name<br></lb>
+			<lb>postcode<br></lb>
+			<lb>town<br></lb>
+			<lb>url<br></lb>
+			<lb>icon<br></lb>
+		</div>
+		<div class="col-sm-6" id="inputs">
+			<input type="text" id="Vname"><br>
+			<input type="text" id="Vpostcode"><br>
+			<input type="text" id="Vtown"><br>
+			<input type="text" id="Vurl"><br>
+			<input type="text" id="Vicon"><br><br>
+			<button id="submitVenue">Add Venue</button>
+		</div>
+	</div>
+	<div class="col-sm-4">
+	</div>
+</div>
+<br>
+<div class="row">
+	<div class="col-sm-5">
+	</div>
+	<div class="col-sm-2">
+
+		<button type="button" class="btn btn-primary" id ="home"><span class="glyphicon glyphicon-home"></</button>
+		<button type="button" class="btn btn-primary" id ="reset">Reset</</button>
+		<button type="button" class="btn btn-primary" id ="showVenues" data-toggle="collapse" data-target="#showVenues">Show Venues</button>
+	</div>
+	<div class="col-sm-5">
+	</div>
+</div>
+<br>
+<div class="row">
+<div class="col-sm-1"></div>
+<div class="col-sm-10" id="venuesDisplay" class="collapse">
+
+</div>
+<div class="col-sm-1"></div>
+
+</div>
+
+
+
+</body>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+	$(document).ready(function()
+	{
+		var baseURL = "/events2017";
+		var auth_token=document.cookie.toString().substring(11);
+		
+		$("#reset").click(function()
+		{
+			
+			$.post(baseURL+"/resetEvents");
+			$.post(baseURL+"/resetVenues");
+		});
+
+		$("#home").click(function()
+		{
+			window.location.assign(baseURL+"/");
+			
+		}); 		
+		
+		$("#showVenues").click(function()
+		{
+			$.get(baseURL+"/venues",function(data)
+			
+			{
+				var newHtml = "";
+				var venueIDs = Object.keys(data.venues);
+				for (var i =0; i<venueIDs.length; i++)
+				{
+					var venue = data.venues[venueIDs[i]];
+					var venueID = venueIDs[i];
+					newHtml = newHtml + venueToHtml(venueID,venue);
+				}
+				$("#venuesDisplay").html(newHtml);
+			}
+			
+			);
+			
+		});
+		
+		
+		$("#submitVenue").click(function()
+		{
+			console.log("submitign form");
+			event.preventDefault();
+			var newVenue = {
+				"auth_token":auth_token,
+				"name":$("#Vname").val(),
+				"postcode":$("#Vpostcode").val(),
+				"town":$("#Vtown").val(),
+				"url":$("#Vurl").val(),
+				"icon":$("#Vicon").val()			
+			}
+			
+			url = "/venues/add?"
+				+ "auth_token=" + auth_token + "&"+
+				+ "name=" + newVenue.name +  "&"+
+				+ "postcode="+ newVenue.postcode + "&"
+				+ "town="+ newVenue.town + "&"
+				+ "url="+ newVenue.url + "&"
+				+ "icon="+ newVenue.icon
+				
+			console.log("post url:"+url);
+			$.post(baseURL+url, function(data)
+			{
+			if(data.status=="ok")
+			{
+				alert("submitted!");
+			}	
+			}
+			);
+		}); 
+		
+		$("#submitEvent").click(function()
+		{
+			console.log("submitign form2");
+			event.preventDefault();
+			var newEvent = {
+				"auth_token":auth_token,
+				"event_id":$("#Eevent_id").val(),
+				"title":$("#Etitle").val(),
+				"venue_id":$("#Evenue").val(),
+				"date":$("#Edate").val(),
+				"url":$("#Eurl").val(),
+				"blurb":$("#Eblurb").val()		
+			}
+			
+			url = "/events/add?" 
+				+ "auth_token=" + auth_token +  "&"
+				+ "event_id=" + newEvent.event_id + "&"
+				+ "title="+ newEvent.title + "&"
+				+ "venue_id="+ newEvent.venue_id + "&"
+				+ "date="+ newEvent.date + "&"
+				+ "url=" + newEvent.url + "&"
+				+ "blurb="+ newEvent.blurb
+
+			console.log("post url:"+url);
+			$.post(baseURL+url,"", function(data) {
+			if(data.status=="ok")
+			{
+				alert("submitted!");
+			}			
+			});
+		});
+		
+		function venueToHtml(venue_id, venue)
+		{
+			html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
+		
+		if (typeof(venue.name)!="undefined")
+		{
+		html += venue.name;
+		}
+		
+		html += '</div> \r\n <div class="panel-body">'
+		
+		
+		html+='<img src="'+venue.icon+'" class="img-responsive" style="width:100%" alt="Image">'
+			
+		html+='</div> \r\n <div class="panel-footer">'
+
+		if (typeof(venue.postcode)!="undefined")
+		{
+		html += venue.postcode+" <br>\r\n"
+		}
+		
+		if (typeof(venue.town)!="undefined")
+		{
+		html += venue.town+" <br>\r\n"
+		}
+		
+		if (typeof(venue.url)!="undefined")
+		{
+		html += '<a href="'+venue.url+'">'+venue.url.toString()+'</a> <br>\r\n'
+		}
+		
+		html+="</div>\r\n";
+		html+="</div>\r\n";
+		html+="</div>\r\n";
+		
+		
+		console.log("we just made this html: "+html)
+		return (html);
+		}
+		
+		
+	}); 
+	
+	
+	
+</script>
+</html>

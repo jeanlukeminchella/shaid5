@@ -1,84 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<style>
-body {font-family: Arial;}
+  <title>Events yo</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
 
-/* Style the tab */
-div.tab {
-    overflow: hidden;
-    
-}
+$(document).ready(function(){
 
-/* Style the buttons inside the tab */
-div.tab button {
-    background-color: inherit;
-    float: right;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-}
+	var baseURL = "/events2017"
 
-/* Change background color of buttons on hover */
-div.tab button:hover {
-    background-color: #ddd;
-}
+	var eventsToDisplay='{"events":[]}';
+	console.log("doc ready");
+	
+	
+	function xmlValue(xmlString, character)
+	{
+	
+		console.log("xml, char is ");
+		console.log(xmlString);
+		console.log(character);
+		var opener = "<"+character+">";
+		var closer = "</"+character+">";
+		var startIndex = xmlString.indexOf(opener);
+		var endIndex = xmlString.indexOf(closer);
 
-/* Create an active/current tablink class */
-div.tab button.active {
-    background-color: #ccc;
-}
+		if (startIndex==-1 || endIndex==-1)
+		{
+			return "(error: xml property not found)"
+		}
+		else
+		{
+			return xmlString.substring(startIndex+2+character.length,endIndex);
+		}
+		
+	}
+	
+	
+	$("#loginButton").click(function()
+	{
+		var cookie = document.cookie;
+		var lastAuth_token = cookie.replace("auth_token=","");
+		var lastAuth_tokenValid=false
+		$.getJSON(baseURL+"/login/validate?auth_token="+lastAuth_token, function(data)
+		{
+			if (data.isValid)
+			{
+				window.location.assign(baseURL+"/admin?auth_token="+lastAuth_token);
+			}
+		});
+	});
+	
+	$("#submitLogin").click(function()
+	{
+		var loginURL = "/login/authenticate?username="+$("#username").val()+"&password="+$("#password").val()
+		
+		$.post(baseURL+loginURL, function(data)
+		{
+			console.log("we tried to login this is what we got: "+JSON.stringify(data));
+			var newAuthToken = data.auth_token;
+			if(typeof(newAuthToken)!="undefined")
+			{
+				document.cookie="auth_token="+newAuthToken;
+				window.location.assign(baseURL+"/admin?auth_token="+newAuthToken);
+			}
+			else
+			{
+				alert("incorrecct username or password");
+			}
+		});
+	}
+	);
 
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-}
-</style>
+	
+	
+	$("#submitQuery").click(function()
+	{
+		var queryString = "/events/search";
+		
+	if(dateAfter>dateBefore)
+	{
+		alert("Please enter a valid date range");
+	}
+	else
+	{
+			
+		var startDate;
+		if ($("#dateAfter").val()=="")
+		{
+			startDate = new Date();
+		}
+		else
+		{
+			startDate = $("#dateAfter").val();
+		}
+		console.log("startdate is "+startDate.toString());
+		
+		var endDate;
+		endDate = $("#dateBefore").val();
+
+		queryString+="?title="+$("#searchTitle").val()+"&dateAfter="+startDate+"&dateBefore="+endDate;
+		$.getJSON(baseURL+queryString, function(data)
+		{
+			console.log("we got "+JSON.stringify(data)+" from server");
+			if(data.events.length==0)
+			{
+				console.log("No such events!");
+			}
+			else
+			{
+				setEventsToDisplay(JSON.stringify(data));
+				updateEvents();
+			}
+		});
+		
+		if($("#includeThirdParty").val()=="Yes")
+		{
+			console.log("were including third parties yay")
+			console.log("end date is"+endDate);
+			var dateRangeQuery="";
+			if (typeof(endDate)!="undefined" && endDate!="")
+			{
+				var startDateString=new Date(Date.parse(startDate));
+				startDateString=startDateString.toISOString().slice(0,10).replace(/-/g,"")+"00";;
+				var endDateString=new Date(Date.parse(endDate));
+				endDateString=endDateString.toISOString().slice(0,10).replace(/-/g,"")+"00";
+				var dateRangeQuery=startDateString+"-"+endDateString;
+				
+			}
+			
+			
+			var searchTitle = $("#searchTitle").val();
+			
+			if (typeof(searchTitle)!="undefined")
+			{
+				searchTitle="";
+			}
+			
+			var xmlReturned = ""
+		
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function()
+			{
+				if (this.readyState == 4 && this.status == 200)
+				{
+					parser = new DOMParser();
+					xmlReturned = parser.parseFromString(this.responseText,"text/xml");
+					// alert(parseInt(xmlReturned.getElementsByTagName("total_items")[0].childNodes[0].nodeValue));
+					var eventArray=xmlReturned.getElementsByTagName("events")[0];
+					
+					var eventsChildren=xmlReturned.getElementsByTagName("events")[0].childNodes;
+					
+					var externalEvents = [];
+					
+					for (var i=0; i<xmlReturned.getElementsByTagName("events")[0].childNodes.length;i++)
+					{
+						try
+						{
+							var evnt=xmlReturned.getElementsByTagName("events")[0].childNodes[i];
+							var eventAsString=(new XMLSerializer()).serializeToString(evnt);
+							
+							
+							if(!(/^\s+$/.test(eventAsString)))
+							{
+							
+							
+								var externalEventAsJson=
+								{
+									"title":xmlValue(eventAsString,"title"),
+									"url":xmlValue(eventAsString,"url"),
+									"blurb":xmlValue(eventAsString,"description"),
+									"date":xmlValue(eventAsString,"description"),
+									"img":xmlValue(xmlValue(eventAsString,"image"),"url")
+								}
+									
+								externalEvents.push(externalEventAsJson);
+								
+								//console.log("we got "+JSON.stringify(externalEventAsJson)+ "extra event");
+							}
+							
+						
+						}
+						catch(err)
+						{
+							//console.log("unsuitabe event:"+err);
+						}
+					}
+					displayExternalEvents(externalEvents)
+				}
+			};
+			xhttp.open("GET", "https://api.eventful.com/rest/events/search?app_key=KLMdRjKHvFNrWLxL&location=uk&"+"date="+dateRangeQuery+"&keywords="+searchTitle, true);
+			xhttp.send();
+		}
+	}
+	}); 
+	
+	function setEventsToDisplay(text)
+	{
+		// console.log("setting evetns to display as: "+text);
+		eventsToDisplay=text;
+	}
+	
+	function displayExternalEvents(events)
+	{
+		console.log("displaying external events");
+		var currentEventList = $("#eventsList").html();
+		for (var i = 0 ; i < events.length ; i++)
+		{
+			currentEventList += externalEventToHTML(events[i]);
+		}
+		$("#eventsList").html(currentEventList);
+	}
+	
+	// this must be in json form {"events":[]}
+	function addEventsToDisplay(text)
+	{
+		if (!(text=="" || typeof(text)=="undefined"))
+		
+		{
+			var currentEvents=JSON.parse(eventsToDisplay);
+			var newEvents=JSON.parse(text);
+			var allEvents = currentEvents.events;
+			for (i = 0; i < newEvents.length; i++) 
+			{
+	    		allEvents.push(newEvents[i]);
+			};
+			eventsToDisplay =
+			{
+				"events":allEvents
+			}
+		}
+		
+	}
+	
+	function updateEvents()
+	{
+		console.log("updatin events: "+eventsToDisplay)
+		var eventsAsArray = JSON.parse(eventsToDisplay).events;
+		var numberOfEvents = eventsAsArray.length;
+		
+		
+		
+		var eventsAsHTML = "";
+		
+		for (var i = 0 ; i < numberOfEvents ; i++)
+		{
+			eventsAsHTML += eventToHTML (eventsAsArray[i]);
+		}
+		
+		$("#eventsList").html(eventsAsHTML);
+	}
+	
+	var venues = {}
+	$.get(baseURL+"/venues",function(data)
+	{
+		venues = data["venues"];
+	});
+	
+	
+	function getIcon(venue_id)
+	{
+		var venue=venues[venue_id]
+		console.log("venue is "+ JSON.stringify(venue));
+		console.log("venue.icon is "+venue.icon);
+		return('<img src="'+venue.icon+'" class="img-responsive" style="width:50%" alt="Image">')
+	}
+	
+	function eventToHTML(event)
+	{
+		console.log("converting event")
+		html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
+		
+		if (typeof(event.title)!="undefined")
+		{
+		html += event.title
+		}
+		
+		html += '</div> \r\n <div class="panel-body">'
+		
+		
+		if (typeof(event.venue_id)!="undefined")
+		{
+			html+=getIcon(event.venue_id);
+			
+		}
+		else
+		{
+			console.log("for event the venue is not defined")
+		}
+		
+		html+='</div> \r\n <div class="panel-footer">'
+
+		if (typeof(event.blurb)!="undefined")
+		{
+		html += "<blurbOfEvent>"+event.blurb+"</blurbOfEvent> <br>\r\n"
+		}
+		
+		if (typeof(event.date)!="undefined")
+		{
+		html += "<dateOfEvent>"+event.date+"</dateOfEvent> <br>\r\n"
+		}
+		
+		if (typeof(event.url)!="undefined")
+		{
+		html += '<a href="'+event.url.substring(0,25)+'">'+event.url.toString()+'...</a> <br>\r\n'
+		}
+		
+		html+="</div>\r\n";
+		html+="</div>\r\n";
+		html+="</div>\r\n"
+		
+		
+		console.log("we just made this html: "+html)
+		return (html);
+		
+	
+	}
+
+	function externalEventToHTML(event)
+	{
+		console.log("converting event")
+		html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
+		
+		if (event.title!="(error: xml property not found)")
+		{
+		html += event.title
+		}
+		
+		html += '</div> \r\n <div class="panel-body">'
+		
+		if (event.img!="(error: xml property not found)")
+		{
+			html+='<img src="'+event.img+'" class="img-responsive" style="width:100%" alt="Image">'
+		}
+		html+='</div> \r\n <div class="panel-footer">'
+
+		if (event.blurb!="(error: xml property not found)")
+		{
+		html += "<blurbOfEvent>"+event.blurb.substring(0,25)+"</blurbOfEvent> <br>\r\n"
+		}
+		
+		if (event.date!="(error: xml property not found)")
+		{
+		html += "<dateOfEvent>"+event.date.substring(0,25)+"</dateOfEvent> <br>\r\n"
+		}
+		
+		if (event.url!="(error: xml property not found)")
+		{
+		html += '<a href="'+event.url+'">'+event.url.toString().substring(0,25)+'</a> <br>\r\n'
+		}
+		
+		html+="</div>\r\n";
+		html+="</div>\r\n";
+		html+="</div>\r\n";
+		
+		
+		console.log("we just made this html: "+html)
+		return (html);
+		
+	
+	}
+	
+	
+	
+	}); 
+
+ </script>
+  
+  <style>
+    .jumbotron 
+	{
+		margin-bottom: 0;
+    }
+   
+	container
+	{
+		width:100%;
+	}
+	
+	
+	lb
+	{
+		float:right;
+		height:24px;
+		width:100%;
+		text-align: right;
+		
+	}
+	
+	submission
+	{
+		text-align: center;
+	}
+	
+	searchButton
+	{
+		width:100px;
+		text-align: center;
+		vertical-align: middle;
+	}
+  </style>
 </head>
 <body>
 
-<div class="tab">
-  <button class="tablinks" onclick="openCity(event, 'Home')">Home</button>
-  <button class="tablinks" onclick="openCity(event, 'About')">About</button>
-  <button class="tablinks" onclick="openCity(event, 'Newsfeed')">Newsfeed</button>
+<div id="demo">
 </div>
 
-<div id="Home" class="tabcontent">
-  <h3>Home</h3>
-  <p>Home</p>
+
+<div class="container" id="container">
+
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="jumbotron" >
+		<div class="container text-center">
+			<h1>Events yo</h1> 
+		</div>
+		</div>
+	</div>
+</div>
+ 
+<div class="row">
+
+	<div class="col-sm-3" >
+
+		<div class="row">
+			<div class="col-sm-5">
+			
+			</div>
+			<div class="col-sm-2">
+			<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+			</div>
+			<div class="col-sm-5">
+			
+			</div>
+			
+		</div>
+		<br>
+		<div id="search" class="collapse">
+		<div class="row">
+			<div class="col-sm-4">
+			<lb>Title/Keyword:</lb><br>
+			<lb>After:</lb><br>
+			<lb>Before:</lb><br>
+			<lb>Third party events:</lb><br>
+			</div>
+			<div class="col-sm-7">
+			<input type="text" id="searchTitle"><br>
+			<input type="date" id="dateAfter"><br>
+			<input type="date" id="dateBefore"><br>
+			<select id="includeThirdParty">
+				<option value="Yes">Include</option>
+		    	<option value="No">Do not</option>
+			</select>
+			</div>
+			<div class="col-sm-1">
+			
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8"><button type="button" id="submitQuery">Search events</button></div>
+		</div>
+		</div>
+		
+		
+
+	</div>
+
+	<div class="col-sm-6" >
+	<br>
+	<div id="eventsList" >
+	</div>
+	</div>
+	
+	<div class="col-sm-3" >
+	
+		<div class="row" >
+			<div class="col-sm-4">
+			</div>
+			<div class="col-sm-2">
+			<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
+			</div>
+			<div class="col-sm-6">
+			
+			</div>
+			
+		</div>
+		<br>
+		<div id="login" class="collapse">
+		<div class="row">
+			<div class="col-sm-4">
+			<lb>Username:</lb><br>
+			<lb>Password</lb><br>
+			</div>
+			<div class="col-sm-8">
+			<input type="text" id="username" value="admin"><br>
+			<input type="password" id="password"><br>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-6"></div>
+			<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
+		</div>
+		</div>
+		
+		
+		
+
+	</div>
 </div>
 
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>About</p> 
-</div>
+<br>
 
-<div id="Newsfeed" class="tabcontent">
-  <h3>Newsfeed</h3>
-  <p>Newsfeed</p>
+<br><br>
 </div>
-
-<script>
-function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-}
-</script>
-     
 </body>
-</html> 
+</html>
