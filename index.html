@@ -422,7 +422,7 @@ $(document).ready(function(){
 
 <script>
 
-	function openPage(pageName,elmnt,color) {
+	function openPage(pageName,elmnt) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -433,44 +433,40 @@ $(document).ready(function(){
         tablinks[i].style.backgroundColor = "";
     }
     document.getElementById(pageName).style.display = "block";
-    elmnt.style.backgroundColor = color;
+    elmnt.style.backgroundColor = "rgb(0, 0, 0)";
 
 	}
 
 	
 </script>
 
+<div class="container" id="container">
+	<div class="row">
+		<div class="col-sm-7"></div>
+		<div class="col-sm-5">
+			<button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">Home</button>
+			<button class="tablink" onclick="openPage('Newsfeed', this)" >Newsfeed</button>
+			<button class="tablink" onclick="openPage('Contact', this)">Contact</button>
+			<button class="tablink" onclick="openPage('About', this)">About</button>
+		</div>
+	</div>
+	
+	<div class="row">
+	<div id="Home" class="tabcontent">
+	  <h3>Home</h3>
+	</div>
 
-<button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
-<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
-<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
+	<div id="Contact" class="tabcontent">
+	  <h3>Contact</h3>
 
+	</div>
 
-
-<div id="News" class="tabcontent">
-  <h3>News</h3>
-  <p>Some news this fine day!</p> 
-</div>
-
-<div id="Contact" class="tabcontent">
-  <h3>Contact</h3>
-  <p>Get in touch, or swing by for a cup of coffee.</p>
-</div>
-
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
-</div>
-
-<div id="Home" class="tabcontent">
-  <h3>Home</h3>
-  <p>Home is where the heart is..</p>
-
-
-	<div class="container" id="container">
-
-
+	<div id="About" class="tabcontent">
+	  <h3>About</h3>
+	  <p>Who we are and what we do.</p>
+	</div>
+	<div id="Newsfeed" class="tabcontent">
+		<h3>Newsfeed</h3>
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="jumbotron" >
@@ -480,22 +476,16 @@ $(document).ready(function(){
 				</div>
 			</div>
 		</div>
-		 
 		<div class="row">
-
 			<div class="col-sm-3" >
-
 				<div class="row">
 					<div class="col-sm-5">
-					
 					</div>
 					<div class="col-sm-2">
 					<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
 					</div>
 					<div class="col-sm-5">
-					
 					</div>
-					
 				</div>
 				<br>
 				<div id="search" class="collapse">
@@ -516,7 +506,6 @@ $(document).ready(function(){
 					</select>
 					</div>
 					<div class="col-sm-1">
-					
 					</div>
 				</div>
 				<br>
@@ -525,19 +514,13 @@ $(document).ready(function(){
 					<div class="col-sm-8"><button type="button" id="submitQuery">Search events</button></div>
 				</div>
 				</div>
-				
-				
-
 			</div>
-
 			<div class="col-sm-6" >
 			<br>
 			<div id="eventsList" >
 			</div>
 			</div>
-			
 			<div class="col-sm-3" >
-			
 				<div class="row" >
 					<div class="col-sm-4">
 					</div>
@@ -545,9 +528,7 @@ $(document).ready(function(){
 					<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
 					</div>
 					<div class="col-sm-6">
-					
 					</div>
-					
 				</div>
 				<br>
 				<div id="login" class="collapse">
@@ -567,14 +548,19 @@ $(document).ready(function(){
 					<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
 				</div>
 				</div>
-				
-				
-				
-
 			</div>
 		</div>
+
 	</div>
+	</div>
+	
 </div>
+
+
+
+
+
+
 <br>
 
 <br><br>
