@@ -15,7 +15,7 @@ addUser(admin);
 var events={"events":[]};
 
 
-var baseURL = "/";
+var baseURL = "";
 
 
 function addUser(user)
