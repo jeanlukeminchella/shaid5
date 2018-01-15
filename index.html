@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Events yo</title>
+  <title>SHAID</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -101,16 +101,7 @@ $(document).ready(function(){
 		eventsToDisplay=text;
 	}
 	
-	function displayExternalEvents(events)
-	{
-		console.log("displaying external events");
-		var currentEventList = $("#eventsList").html();
-		for (var i = 0 ; i < events.length ; i++)
-		{
-			currentEventList += externalEventToHTML(events[i]);
-		}
-		$("#eventsList").html(currentEventList);
-	}
+
 	
 	// this must be in json form {"events":[]}
 	function addEventsToDisplay(text)
@@ -191,9 +182,9 @@ $(document).ready(function(){
 		
 		html+='</div> \r\n <div class="panel-footer">'
 
-		if (typeof(event.blurb)!="undefined")
+		if (typeof(event.description)!="undefined")
 		{
-		html += "<blurbOfEvent>"+event.blurb+"</blurbOfEvent> <br>\r\n"
+		html += "<descriptionOfEvent>"+event.description+"</descriptionOfEvent> <br>\r\n"
 		}
 		
 		if (typeof(event.date)!="undefined")
@@ -235,9 +226,9 @@ $(document).ready(function(){
 		}
 		html+='</div> \r\n <div class="panel-footer">'
 
-		if (event.blurb!="(error: xml property not found)")
+		if (event.description!="(error: xml property not found)")
 		{
-		html += "<blurbOfEvent>"+event.blurb.substring(0,25)+"</blurbOfEvent> <br>\r\n"
+		html += "<descriptionOfEvent>"+event.description.substring(0,25)+"</descriptionOfEvent> <br>\r\n"
 		}
 		
 		if (event.date!="(error: xml property not found)")
