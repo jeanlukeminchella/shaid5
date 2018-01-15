@@ -364,9 +364,10 @@ $(document).ready(function(){
 	
 	}
 	
+	// Get the element with id="defaultOpen" and click on it
+	document.getElementById("defaultOpen").click();
 	
-	
-	}); 
+}); 
 
 </script>
   
@@ -402,143 +403,175 @@ $(document).ready(function(){
 		text-align: center;
 		vertical-align: middle;
 	}
+	
+	.tablink 
+	{
+		background-color: #555;
+		color: white;
+		float: left;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 14px 16px;
+		font-size: 17px;
+		width: 25%;
+	}
   </style>
 </head>
 <body>
 
+<script>
+
+	function openPage(pageName,elmnt,color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+
+	}
+
+	
+</script>
 
 
-<button class="tablink" onclick="openCity('London', this, 'red')" id="defaultOpen">London</button>
-<button class="tablink" onclick="openCity('Paris', this, 'green')">Paris</button>
-<button class="tablink" onclick="openCity('Tokyo', this, 'blue')">Tokyo</button>
-<button class="tablink" onclick="openCity('Oslo', this, 'orange')">Oslo</button>
+<button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
+<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
+<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
+<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
 
 
-<div id="London" class="tabcontent">
-  <h3>London</h3>
-  <p>London is the capital city of England.</p>
+
+<div id="News" class="tabcontent">
+  <h3>News</h3>
+  <p>Some news this fine day!</p> 
 </div>
 
-<div id="Paris" class="tabcontent">
-  <h3>Paris</h3>
-  <p>Paris is the capital of France.</p> 
+<div id="Contact" class="tabcontent">
+  <h3>Contact</h3>
+  <p>Get in touch, or swing by for a cup of coffee.</p>
 </div>
 
-<div id="Tokyo" class="tabcontent">
-  <h3>Tokyo</h3>
-  <p>Tokyo is the capital of Japan.</p>
+<div id="About" class="tabcontent">
+  <h3>About</h3>
+  <p>Who we are and what we do.</p>
 </div>
 
-<div id="Oslo" class="tabcontent">
-  <h3>Oslo</h3>
-  <p>Oslo is the capital of Norway.</p>
+<div id="Home" class="tabcontent">
+  <h3>Home</h3>
+  <p>Home is where the heart is..</p>
 
 
+	<div class="container" id="container">
 
 
-<div class="container" id="container">
-
-
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="jumbotron" >
-			<div class="container text-center">
-				<h1>Shaid Fam its real</h1> 
-			</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="jumbotron" >
+				<div class="container text-center">
+					<h1>Shaid Fam its real</h1> 
+				</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	 
-	<div class="row">
+		 
+		<div class="row">
 
-		<div class="col-sm-3" >
+			<div class="col-sm-3" >
 
-			<div class="row">
-				<div class="col-sm-5">
-				
+				<div class="row">
+					<div class="col-sm-5">
+					
+					</div>
+					<div class="col-sm-2">
+					<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+					</div>
+					<div class="col-sm-5">
+					
+					</div>
+					
 				</div>
-				<div class="col-sm-2">
-				<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+				<br>
+				<div id="search" class="collapse">
+				<div class="row">
+					<div class="col-sm-4">
+					<lb>Title/Keyword:</lb><br>
+					<lb>After:</lb><br>
+					<lb>Before:</lb><br>
+					<lb>Third party events:</lb><br>
+					</div>
+					<div class="col-sm-7">
+					<input type="text" id="searchTitle"><br>
+					<input type="date" id="dateAfter"><br>
+					<input type="date" id="dateBefore"><br>
+					<select id="includeThirdParty">
+						<option value="Yes">Include</option>
+				    	<option value="No">Do not</option>
+					</select>
+					</div>
+					<div class="col-sm-1">
+					
+					</div>
 				</div>
-				<div class="col-sm-5">
-				
+				<br>
+				<div class="row">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-8"><button type="button" id="submitQuery">Search events</button></div>
+				</div>
 				</div>
 				
+				
+
 			</div>
+
+			<div class="col-sm-6" >
 			<br>
-			<div id="search" class="collapse">
-			<div class="row">
-				<div class="col-sm-4">
-				<lb>Title/Keyword:</lb><br>
-				<lb>After:</lb><br>
-				<lb>Before:</lb><br>
-				<lb>Third party events:</lb><br>
-				</div>
-				<div class="col-sm-7">
-				<input type="text" id="searchTitle"><br>
-				<input type="date" id="dateAfter"><br>
-				<input type="date" id="dateBefore"><br>
-				<select id="includeThirdParty">
-					<option value="Yes">Include</option>
-			    	<option value="No">Do not</option>
-				</select>
-				</div>
-				<div class="col-sm-1">
-				
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-sm-4"></div>
-				<div class="col-sm-8"><button type="button" id="submitQuery">Search events</button></div>
+			<div id="eventsList" >
 			</div>
 			</div>
 			
+			<div class="col-sm-3" >
 			
-
-		</div>
-
-		<div class="col-sm-6" >
-		<br>
-		<div id="eventsList" >
-		</div>
-		</div>
-		
-		<div class="col-sm-3" >
-		
-			<div class="row" >
-				<div class="col-sm-4">
+				<div class="row" >
+					<div class="col-sm-4">
+					</div>
+					<div class="col-sm-2">
+					<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
+					</div>
+					<div class="col-sm-6">
+					
+					</div>
+					
 				</div>
-				<div class="col-sm-2">
-				<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
+				<br>
+				<div id="login" class="collapse">
+				<div class="row">
+					<div class="col-sm-4">
+					<lb>Username:</lb><br>
+					<lb>Password</lb><br>
+					</div>
+					<div class="col-sm-8">
+					<input type="text" id="username" value="admin"><br>
+					<input type="password" id="password"><br>
+					</div>
 				</div>
-				<div class="col-sm-6">
-				
+				<br>
+				<div class="row">
+					<div class="col-sm-6"></div>
+					<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
+				</div>
 				</div>
 				
-			</div>
-			<br>
-			<div id="login" class="collapse">
-			<div class="row">
-				<div class="col-sm-4">
-				<lb>Username:</lb><br>
-				<lb>Password</lb><br>
-				</div>
-				<div class="col-sm-8">
-				<input type="text" id="username" value="admin"><br>
-				<input type="password" id="password"><br>
-				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="col-sm-6"></div>
-				<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
-			</div>
-			</div>
-			
-			
-			
+				
+				
 
+			</div>
 		</div>
 	</div>
 </div>
