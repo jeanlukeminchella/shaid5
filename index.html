@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>SHAID</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script>
-
+<title>SHAID</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
 $(document).ready(function(){
-
 	var baseURL = ""
-
-	var eventsToDisplay='{"events":[]}';
+	var objectsToDisplay='{"objects":[]}';
 	console.log("doc ready");
 
 	$("#loginButton").click(function()
@@ -57,48 +54,49 @@ $(document).ready(function(){
 	{
 		var queryString = "/events/search";
 		
-	if(dateAfter>dateBefore)
-	{
-		alert("Please enter a valid date range");
-	}
-	else
-	{
-			
-		var startDate;
-		if ($("#dateAfter").val()=="")
+		if(dateAfter>dateBefore)
 		{
-			startDate = new Date();
+			alert("Please enter a valid date range");
 		}
+		
 		else
 		{
-			startDate = $("#dateAfter").val();
-		}
-		console.log("startdate is "+startDate.toString());
-		
-		var endDate;
-		endDate = $("#dateBefore").val();
-
-		queryString+="?title="+$("#searchTitle").val()+"&dateAfter="+startDate+"&dateBefore="+endDate;
-		$.getJSON(baseURL+queryString, function(data)
-		{
-			console.log("we got "+JSON.stringify(data)+" from server");
-			if(data.events.length==0)
+			var startDate;
+			if ($("#dateAfter").val()=="")
 			{
-				console.log("No such events!");
+				startDate = new Date();
 			}
 			else
 			{
-				setEventsToDisplay(JSON.stringify(data));
-				updateEvents();
+				startDate = $("#dateAfter").val();
 			}
-		});
-	}
+			console.log("startdate is "+startDate.toString());
+			
+			var endDate;
+			endDate = $("#dateBefore").val();
+
+			queryString+="?title="+$("#searchTitle").val()+"&dateAfter="+startDate+"&dateBefore="+endDate;
+			
+			$.getJSON(baseURL+queryString, function(data)
+			{
+				console.log("we got "+JSON.stringify(data)+" from server");
+				if(data.events.length==0)
+				{
+					console.log("No such events!");
+				}
+				else
+				{
+					setObjectsToDisplay(JSON.stringify(data));
+					updateEvents();
+				}
+			});
+		}
 	}); 
 	
-	function setEventsToDisplay(text)
+	function setObjectsToDisplay(text)
 	{
 		// console.log("setting evetns to display as: "+text);
-		eventsToDisplay=text;
+		objectsToDisplay=text;
 	}
 	
 
@@ -252,6 +250,21 @@ $(document).ready(function(){
 	
 	}
 	
+	function goToBlogPage(blog)
+	{
+		
+	}
+	
+	function goToEventPage(event)
+	{
+	
+	}
+		
+	function goToCampaignPage(campaign)
+	{
+	
+	}
+	
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
 	
@@ -260,6 +273,69 @@ $(document).ready(function(){
 </script>
   
  <style>
+ 
+ 
+	
+	#countdown-wrap {
+  width: 100%;
+  height: 300px;
+  //border: 1px solid black;
+  padding: 20px;
+  font-family: arial;
+  max-width: 650px;
+  margin: 150px auto 300px;
+}
+
+#goal {
+  font-size: 48px;
+  text-align: right;
+  color: #FFF;
+  @media only screen and (max-width : 640px) {
+    text-align: center;  
+  }
+  
+}
+
+#glass {
+  width: 100%;
+  height: 20px;
+  background: #c7c7c7;
+  border-radius: 10px;
+  float: left;
+  overflow: hidden;
+}
+
+#progress {
+  float: left;
+  width: 16%;
+  height: 20px;
+  background: #FF5D50;
+  z-index: 333;
+  //border-radius: 5px;
+}
+
+.goal-stat {
+  width: 25%;
+  //height: 30px;
+  padding: 10px;
+  float: left;
+  margin: 0;
+  color: #FFF;
+  
+  @media only screen and (max-width : 640px) {
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.goal-number, .goal-label {
+  display: block;
+}
+
+.goal-number {
+  font-weight: bold;
+}
+
     .jumbotron 
 	{
 		margin-bottom: 0;
@@ -336,6 +412,43 @@ $(document).ready(function(){
     elmnt.style.backgroundColor = "rgb(0, 0, 0)";
 
 	}
+	
+	CountDownTimer('12/20/2020 10:1 AM', 'countdown');
+    CountDownTimer('12/20/2020 10:1 AM', 'newcountdown');
+
+    function CountDownTimer(dt, id)
+    {
+        var end = new Date(dt);
+
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        function showRemaining() {
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+
+                clearInterval(timer);
+                document.getElementById(id).innerHTML = '0';
+
+                return;
+            }
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+
+            document.getElementById(id).innerHTML = days /*+ ' days'*/;
+            //document.getElementById(id).innerHTML += hours + 'hrs ';
+            //document.getElementById(id).innerHTML += minutes + 'mins ';
+            //document.getElementById(id).innerHTML += seconds + 'secs';
+        }
+
+        timer = setInterval(showRemaining, 1000);
+    }
 
 	
 </script>
@@ -362,7 +475,30 @@ $(document).ready(function(){
 
 	<div id="Services" class="tabcontent">
 	  <h3>Services</h3>
-
+	
+		<div id=countdown-wrap>
+  <div id="goal">$10,000</div>
+  <div id="glass">
+    <div id="progress">
+    </div>
+  </div>
+  <div class="goal-stat">
+    <span class="goal-number">16%</span>
+    <span class="goal-label">Funded</span>
+  </div>
+  <div class="goal-stat">
+    <span class="goal-number">$1,640</span>
+    <span class="goal-label">Raised</span>
+  </div>
+  <div class="goal-stat">
+    <span class="goal-number"><div id="countdown"></div></span>
+    <span class="goal-label">Days to Go</span>
+  </div>
+  <div class="goal-stat">
+    <span class="goal-number">38</span>
+    <span class="goal-label">Sponsors</span>
+  </div>
+</div>
 	</div>
 
 	<div id="About" class="tabcontent">
