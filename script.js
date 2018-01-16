@@ -1,4 +1,3 @@
-<script>
 $(document).ready(function(){
 	var baseURL = ""
 	var objectsToDisplay='{"objects":[]}';
@@ -101,15 +100,12 @@ $(document).ready(function(){
 			var currentEvents=JSON.parse(eventsToDisplay);
 			var newEvents=JSON.parse(text);
 			var allEvents = currentEvents.events;
-			for (i = 0; i < newEvents.length; i++) 
+			for (i = 0; i < newEvents.length; i++)
 			{
-	    		allEvents.push(newEvents[i]);
-			};
-			eventsToDisplay =
-			{
-				"events":allEvents
+				allEvents.push(newEvents[i]);
 			}
-		}
+			eventsToDisplay = '{"events":'+allEvents+'}'
+		} 
 		
 	}
 	
@@ -241,24 +237,9 @@ $(document).ready(function(){
 	
 	}
 	
-	function goToBlogPage(blog)
-	{
-		
-	}
 	
-	function goToEventPage(event)
-	{
-	
-	}
-		
-	function goToCampaignPage(campaign)
-	{
-	
-	}
 	
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
 	
 }); 
-
-</script>
