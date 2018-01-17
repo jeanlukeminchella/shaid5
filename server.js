@@ -83,6 +83,12 @@ function authoriseToken(auth_token, ipAddress)
 	sessions[ipAddress]=[auth_token,new Date()];
 }
 
+app.get("/objectPage")
+{
+	resp.sendFile(path.join(__dirname + "/objectPage.html"))
+	
+}
+
 
 app.get(baseURL+'/admin', function(req, resp){
 	if(isAuthorised(req.ip,req.query.auth_token))
