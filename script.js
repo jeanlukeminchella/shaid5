@@ -65,6 +65,29 @@ $(document).ready(function(){
 				queryString+="keyword="+$("#keyword").val()+"&";
 			}
 			
+			var x = document.getElementById("includeBlogs");
+			var includeBlogs = (x.checked);
+			x = document.getElementById("includeEvents");
+			var includeEvents = (x.checked);
+			x = document.getElementById("includeCampaigns");
+			var includeCampaigns = (x.checked);
+			
+			if (includeBlogs || includeCampaigns || includeEvents)
+			{
+				if (includeBlogs)
+				{
+					queryString+="includeBlogs="+includeBlogs+"&";
+				}
+				if (includeCampaigns)
+				{
+					queryString+="includeCampaigns="+includeCampaigns+"&";
+				}
+				if (includeEvents)
+				{
+					queryString+="includeEvents="+includeEvents+"&";
+				}
+			}
+			
 			queryString+="amount=20";
 			
 			
@@ -180,6 +203,22 @@ $(document).ready(function(){
 
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
+	
+	$.getJSON("/search?amount=20", function(data)
+	{
+		console.log("we got "+JSON.stringify(data)+" from server");
+		if(data.events.length==0)
+		{
+			console.log("No such events!");
+		}
+		else
+		{
+			setObjectsToDisplay('{"objects":'+JSON.stringify(data.events)+"}");
+			updateNewsfeed();
+		}
+	}
+	)
+	
 	
 }
 ); 

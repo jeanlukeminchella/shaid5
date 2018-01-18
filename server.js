@@ -327,6 +327,7 @@ function resetEvents()
 	events = {"events":[
 						{
 						"ID":"1",
+						"type":"event",
 						"title":"Swaledale Squeeze 2018",
 						"description":"The biggest and best concertina weekend in the world. Held each May in Grinton Lodge YHA, North Yorkshire",
 						"summary":"The biggest and best concertina weekend in the world",
@@ -338,6 +339,7 @@ function resetEvents()
 						},
 						{
 						"ID":"2",
+						"type":"event",
 						"title":"gdsagfafd Squeeze 2018",
 						"description":"The worst and bestvfdsae",
 						"summary":"The biggest and best concertina weekend in the world",
