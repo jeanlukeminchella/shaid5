@@ -64,15 +64,11 @@
 		margin-bottom: 0;
     }
 	
-	.help
+	body
 	{
 
 		background-image: url("HomelessinGravesend.jpg");
-
-
-		color:blue;
-		
-		border-style:solid;
+		height:100%;
 		
 
 		background-position: center;
