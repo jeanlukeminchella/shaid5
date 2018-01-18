@@ -12,7 +12,7 @@ var sessions={};
 var admin = {"username":"admin","password":"concertina"};
 addUser(admin);
 
-var events={"events":[]};
+var newsItems={"newsItems":[]};
 
 
 var baseURL = "";
@@ -125,12 +125,11 @@ app.get(baseURL+'/admin', function(req, resp){
 
 
 
-app.get(baseURL+'/events/search', function(req, res){
+app.get(baseURL+'/search', function(req, res){
 	
 	
 	
-	var content = events;
-	var eventsArray = content.events;
+	var content = newsItems;
 	
 	
 	var paramDate = req.query.date;
@@ -149,7 +148,6 @@ app.get(baseURL+'/events/search', function(req, res){
 	{
 		var beforeMsc = Date.parse(paramDateBefore);
 		paramDateBefore = new Date(beforeMsc);
-		paramDateBefore = new Date(beforeMsc);
 		weHaveADateRange=true;
 		if (typeof(paramDateAfter)=="undefined" || paramDateAfter=="")
 		{
@@ -162,86 +160,116 @@ app.get(baseURL+'/events/search', function(req, res){
 			paramDateAfter= new Date(afterMsc);
 		}
 	}
-	
-	
-	
-	var paramTitle = req.query.title;
+
+	var paramKeyword = req.query.keyword;
 	var weHaveATitle=false;
-	if (!(typeof(paramTitle)=="undefined" || paramTitle=="" || paramTitle=="undefined"))
+	if (!(typeof(paramKeyword)=="undefined" || paramKeyword=="" || paramKeyword=="undefined"))
 	{
 		weHaveATitle=true;
 	}
 	
-	console.log("just had a search for date:"+paramDate+" and title:"+paramTitle+" and date range "+paramDateAfter+" "+paramDateBefore);
-	console.log ("so weHaveATitle="+weHaveATitle+" and weHaveADateRange="+weHaveADateRange+" and weHaveADate="+weHaveADate);
+	
+	var typeFussy = false
+	var includeBlogs = (req.query.includeBlogs=="true");
+	var includeEvents = (req.query.includeEvents=="true");
+	var includeCampaigns = (req.query.includeCampaigns=="true");
+	
+	if (req.query.includeBlogs=="true"||req.query.includeBlogs=="false")
+	{
+		typeFussy=true;
+		includeBlogs==(req.query.includeBlogs=="true");
+	}
+	if (req.query.includeEvents=="true"||req.query.includeEvents=="false")
+	{
+		typeFussy=true;
+		includeEvents==(req.query.includeEvents=="true");
+	}
+	if (req.query.includeCampaigns=="true"||req.query.includeCampaigns=="false")
+	{
+		typeFussy=true;
+		includeCampaigns==(req.query.includeCampaigns=="true");
+	}
+	
+	
+	console.log("include blogs, events, campsign are "+includeBlogs+" "+includeEvents+" "+includeCampaigns);
+	console.log("we are type fussy:"+typeFussy);
+	console.log("just had a search for date:"+paramDate+" and title:"+paramKeyword+" and date range "+paramDateAfter+" "+paramDateBefore);
+	console.log("so weHaveATitle="+weHaveATitle+" and weHaveADateRange="+weHaveADateRange+" and weHaveADate="+weHaveADate);
 	
 	
 	// BEGIN THE SEARCH	
 	
-	var validEvents = [];
+	var validNewsItems = [];
 	
 	//console.log("all the events are:"+JSON.stringify(content.events))
 	
-	for (var i = 0; i < content.events.length; i++) 
+	for (var i = 0; i < content.newsItems.length; i++) 
 	{
-		var evnt = content.events[i];
-		console.log("current evvmt title :"+JSON.stringify(evnt.title))
-		var eventMatchesSearch = true;
+		var nwsItem = content.newsItems[i];
+		console.log("current evvmt title :"+JSON.stringify(nwsItem.title))
+		var newsMatchesSearch = true;
 		if (weHaveATitle)
 		{
 			
-			if(!evnt.title.includes(paramTitle))
+			if(!nwsItem.title.includes(paramKeyword))
 			{
-				eventMatchesSearch = false;
+				newsMatchesSearch = false;
 				console.log("	sorry wrong title");
 			}
 		}
-		console.log("weHaveADate && eventMatchesSearch is "+(weHaveADate && eventMatchesSearch));
-		if (weHaveADate && eventMatchesSearch)
+		console.log("weHaveADate && newsMatchesSearch is "+(weHaveADate && newsMatchesSearch));
+		if (weHaveADate && newsMatchesSearch)
 		{
 			console.log("	testing date");
-			if(evnt.date!=paramDate)
+			if(nwsItem.date!=paramDate)
 			{
 				console.log("	sorry wrong date");
-				eventMatchesSearch = false;
+				newsMatchesSearch = false;
 			}
 		}
 		
-		if (weHaveADateRange && eventMatchesSearch)
+		if (weHaveADateRange && newsMatchesSearch)
 		{
-			var evntMilisec = Date.parse(evnt.date);
-			var eventDate = new Date(evntMilisec);
+			var nwsItemMilisec = Date.parse(nwsItem.date);
+			var eventDate = new Date(nwsItemMilisec);
 			console.log("	testing date range");
 			console.log("			paramDateBefore="+paramDateBefore);
-			console.log("			evnt.date="+eventDate);
+			console.log("			nwsItem.date="+eventDate);
 			console.log("			paramDateAfter="+paramDateAfter);
 
 			if(!(eventDate<paramDateBefore && eventDate>paramDateAfter))
 			{
-				console.log("	sorry not in date range, evnt.date<paramDateBefore s "+(eventDate<paramDateBefore)+ "and evnt.date>paramDateAfter is "+(eventDate>paramDateAfter));
-				eventMatchesSearch = false;
+				console.log("	sorry not in date range, nwsItem.date<paramDateBefore s "+(eventDate<paramDateBefore)+ "and nwsItem.date>paramDateAfter is "+(eventDate>paramDateAfter));
+				newsMatchesSearch = false;
 			}
 		}
 		
-		if(eventMatchesSearch)
+		if(typeFussy&&((nwsItem.type=="blog"&&!includeBlogs)||(nwsItem.type=="campaign"&&!includeCampaigns)||(nwsItem.type=="event"&&!includeEvents)))
 		{
-			console.log("we found a great event:"+JSON.stringify(evnt.title));
+			console.log("sorry this is the wrong type of news");
+			newsMatchesSearch=false;
+		}
+		
+		
+		if(newsMatchesSearch)
+		{
+			console.log("we found a great event:"+JSON.stringify(nwsItem.title));
 			finalEvent =
 			{
-				"ID":evnt.ID,
-				"title":evnt.title,
-				"description":evnt.description,
-				"date":evnt.date,
-				"url":evnt.url,
+				"ID":nwsItem.ID,
+				"title":nwsItem.title,
+				"description":nwsItem.description,
+				"date":nwsItem.date,
+				"url":nwsItem.url,
 			}
-			validEvents.push(evnt);
+			validNewsItems.push(nwsItem);
 		}
 	}
 	
 	
 	var eventsListAsJSON = 
 	{
-		"events":validEvents
+		"newsItems":validNewsItems
 	}
 	
 	console.log("sending "+JSON.stringify(eventsListAsJSON))
@@ -257,11 +285,11 @@ app.get(baseURL+'/events/get/:ID', function(req, res){
 	var content = events;
 	var eventsList = content.events;
 	res.setHeader('content-type', 'application/json');
-	for (evnt in eventsList)
+	for (nwsItem in eventsList)
 	{
-		if (evnt.ID == ID)
+		if (nwsItem.ID == ID)
 		{
-			res.json(evnt);
+			res.json(nwsItem);
 		}
 	}
 	res.json({"error": "no such event"});
@@ -281,7 +309,7 @@ app.post(baseURL+'/events/add', function(req, res){
 	{
 
 	
-		var evnt = 
+		var nwsItem = 
 		{
 			"ID":req.query.ID,
 			"title":req.query.title,
@@ -291,7 +319,7 @@ app.post(baseURL+'/events/add', function(req, res){
 		};
 		
 		
-		if (typeof(evnt.title) == "undefined"||typeof(evnt.ID) == "undefined"||typeof(evnt.date) == "undefined")
+		if (typeof(nwsItem.title) == "undefined"||typeof(nwsItem.ID) == "undefined"||typeof(nwsItem.date) == "undefined")
 		{
 		res.status(400);
 		res.setHeader('Content-Type', 'application/json');
@@ -299,8 +327,8 @@ app.post(baseURL+'/events/add', function(req, res){
 		}
 		else
 		{
-			console.log("adding event"+JSON.stringify(evnt));
-			eventsArray.push(evnt);
+			console.log("adding event"+JSON.stringify(nwsItem));
+			eventsArray.push(nwsItem);
 			content.events=eventsArray;
 			console.log("eventss array is now: "+JSON.stringify(eventsArray));
 			events=content;
@@ -324,7 +352,7 @@ function resetEvents()
 {
 	console.log("resetting Events")
 	
-	events = {"events":[
+	newsItems = {"newsItems":[
 						{
 						"ID":"1",
 						"type":"event",
@@ -339,7 +367,7 @@ function resetEvents()
 						},
 						{
 						"ID":"2",
-						"type":"event",
+						"type":"blog",
 						"title":"gdsagfafd Squeeze 2018",
 						"description":"The worst and bestvfdsae",
 						"summary":"The biggest and best concertina weekend in the world",

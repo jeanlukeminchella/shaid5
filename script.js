@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
 	var baseURL = ""
-	var objectsToDisplay='{"objects":[]}';
+	var objectsToDisplay='{"newsItems":[]}';
 	console.log("doc ready");
 
 	$("#loginButton").click(function()
@@ -43,7 +43,7 @@ $(document).ready(function(){
 	
 	$("#submitQuery").click(function()
 	{
-		var queryString = "/events/search?";
+		var queryString = "/search?";
 		
 		if(dateAfter>dateBefore)
 		{
@@ -98,13 +98,13 @@ $(document).ready(function(){
 			$.getJSON(baseURL+queryString, function(data)
 			{
 				console.log("we got "+JSON.stringify(data)+" from server");
-				if(data.events.length==0)
+				if(data.newsItems.length==0)
 				{
-					console.log("No such events!");
+					console.log("No such newsItems!");
 				}
 				else
 				{
-					setObjectsToDisplay('{"objects":'+JSON.stringify(data.events)+"}");
+					setObjectsToDisplay('{"newsItems":'+JSON.stringify(data.newsItems)+"}");
 					updateNewsfeed();
 				}
 			}
@@ -141,7 +141,7 @@ $(document).ready(function(){
 	function updateNewsfeed()
 	{
 		console.log("updatin news items: "+objectsToDisplay)
-		var newsItemsAsArray = JSON.parse(objectsToDisplay).objects;
+		var newsItemsAsArray = JSON.parse(objectsToDisplay).newsItems;
 		var numberOfEvents = newsItemsAsArray.length;
 		
 		
@@ -207,13 +207,13 @@ $(document).ready(function(){
 	$.getJSON("/search?amount=20", function(data)
 	{
 		console.log("we got "+JSON.stringify(data)+" from server");
-		if(data.events.length==0)
+		if(data.newsItems.length==0)
 		{
 			console.log("No such events!");
 		}
 		else
 		{
-			setObjectsToDisplay('{"objects":'+JSON.stringify(data.events)+"}");
+			setObjectsToDisplay('{"newsItems":'+JSON.stringify(data.newsItems)+"}");
 			updateNewsfeed();
 		}
 	}
