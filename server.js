@@ -84,9 +84,24 @@ function authoriseToken(auth_token, ipAddress)
 }
 
 
-app.get("/objectPage", function(req, resp){
+app.get("/objectPage.html", function(req, resp){
 	console.log("objectPage sent" )
 	resp.sendFile(path.join(__dirname + "/objectPage.html"))
+});
+
+app.get("/script.js", function(req, resp){
+	console.log("objectPage sent" )
+	resp.sendFile(path.join(__dirname + "/script.js"))
+});
+
+app.get("/rexjs", function(req, resp){
+	console.log("objectPage sent" )
+	resp.sendFile(path.join(__dirname + "/rex.js"))
+});
+
+app.get("/style.css", function(req, resp){
+	console.log("objectPage sent" )
+	resp.sendFile(path.join(__dirname + "/style.css"))
 });
 
 
