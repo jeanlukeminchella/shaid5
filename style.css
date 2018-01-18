@@ -81,7 +81,7 @@
 
 	}
    
-	container
+	#container
 	{
 		width:100%;
 	}
@@ -92,15 +92,33 @@
 		float:right;
 		height:24px;
 		width:100%;
-		text-align: right;
+		text-align:right;
 		
+	}
+	
+	newsItem
+	{
+		font-size:10px;
+	}
+	h1
+	{
+		font-size:12px;
+	}
+	
+	summaryOfnewsItem
+	{
+		font-size: 4px;
 	}
 	
 	searchButton
 	{
+/* 		text-align: center;
+		vertical-align: middle; */
+	}
+	
+	input
+	{
 		width:100px;
-		text-align: center;
-		vertical-align: middle;
 	}
 	
 	.tablink 

@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	var baseURL = ""
 	var objectsToDisplay='{"objects":[]}';
@@ -42,7 +43,7 @@ $(document).ready(function(){
 	
 	$("#submitQuery").click(function()
 	{
-		var queryString = "/events/search";
+		var queryString = "/events/search?";
 		
 		if(dateAfter>dateBefore)
 		{
@@ -51,21 +52,25 @@ $(document).ready(function(){
 		
 		else
 		{
-			var startDate;
-			if ($("#dateAfter").val()=="")
+			if ($("#dateAfter").val()!="")
 			{
-				startDate = new Date();
+				queryString+="dateAfter="+$("#dateAfter").val()+"&";
 			}
-			else
+			if ($("#dateBefore").val()!="")
 			{
-				startDate = $("#dateAfter").val();
+				queryString+="dateBefore="+$("#dateBefore").val()+"&";
 			}
-			console.log("startdate is "+startDate.toString());
+			if ($("#keyword").val()!="")
+			{
+				queryString+="keyword="+$("#keyword").val()+"&";
+			}
 			
-			var endDate;
-			endDate = $("#dateBefore").val();
-
-			queryString+="?title="+$("#searchTitle").val()+"&dateAfter="+startDate+"&dateBefore="+endDate;
+			queryString+="amount=20";
+			
+			
+			
+			console.log("sending GET Request "+queryString);
+			
 			
 			$.getJSON(baseURL+queryString, function(data)
 			{
@@ -76,115 +81,94 @@ $(document).ready(function(){
 				}
 				else
 				{
-					setObjectsToDisplay(JSON.stringify(data));
-					updateEvents();
+					setObjectsToDisplay('{"objects":'+JSON.stringify(data.events)+"}");
+					updateNewsfeed();
 				}
-			});
+			}
+			);
 		}
 	}); 
 	
 	function setObjectsToDisplay(text)
 	{
-		// console.log("setting evetns to display as: "+text);
+		console.log("setting evetns to display as: "+text);
 		objectsToDisplay=text;
 	}
 	
 
 	
-	// this must be in json form {"events":[]}
-	function addEventsToDisplay(text)
+	/* // this must be in json form {"events":[]}
+	function addobjectsToDisplay(text)
 	{
 		if (!(text=="" || typeof(text)=="undefined"))
 		
 		{
-			var currentEvents=JSON.parse(eventsToDisplay);
+			var currentEvents=JSON.parse(objectsToDisplay);
 			var newEvents=JSON.parse(text);
 			var allEvents = currentEvents.events;
 			for (i = 0; i < newEvents.length; i++)
 			{
 				allEvents.push(newEvents[i]);
 			}
-			eventsToDisplay = '{"events":'+allEvents+'}'
+			objectsToDisplay = '{"events":'+allEvents+'}'
 		} 
 		
-	}
+	} */
 	
-	function updateEvents()
+	function updateNewsfeed()
 	{
-		console.log("updatin events: "+eventsToDisplay)
-		var eventsAsArray = JSON.parse(eventsToDisplay).events;
-		var numberOfEvents = eventsAsArray.length;
+		console.log("updatin news items: "+objectsToDisplay)
+		var newsItemsAsArray = JSON.parse(objectsToDisplay).objects;
+		var numberOfEvents = newsItemsAsArray.length;
 		
 		
 		
-		var eventsAsHTML = "";
+		var newsAsHTML = "";
 		
 		for (var i = 0 ; i < numberOfEvents ; i++)
 		{
-			eventsAsHTML += eventToHTML (eventsAsArray[i]);
+			newsAsHTML += newsItemToHTML (newsItemsAsArray[i]);
 		}
 		
-		$("#eventsList").html(eventsAsHTML);
+		$("#newsList").html(newsAsHTML);
 	}
 	
-	var venues = {}
-	$.get(baseURL+"/venues",function(data)
-	{
-		venues = data["venues"];
-	});
 	
 	
-	function getIcon(venue_id)
-	{
-		var venue=venues[venue_id]
-		console.log("venue is "+ JSON.stringify(venue));
-		console.log("venue.icon is "+venue.icon);
-		return('<img src="'+venue.icon+'" class="img-responsive" style="width:50%" alt="Image">')
-	}
 	
-	function eventToHTML(event)
+	
+	
+	function newsItemToHTML(newsItem)
 	{
-		console.log("converting event")
-		html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
+		console.log("converting newsItem")
+		html = '<newsItem class="row"> \r\n '
 		
-		if (typeof(event.title)!="undefined")
+		if (typeof(newsItem.image)!="undefined")
 		{
-		html += event.title
-		}
-		
-		html += '</div> \r\n <div class="panel-body">'
-		
-		
-		if (typeof(event.venue_id)!="undefined")
-		{
-			html+=getIcon(event.venue_id);
+			
+			html+='<div class="col-sm-3" ><img src="'+newsItem.image+'" width="150" height="150"></div> \r\n';
 			
 		}
-		else
+		html+='<div class="col-sm-1" ></div><div class="col-sm-8" >'
+		if (typeof(newsItem.title)!="undefined")
 		{
-			console.log("for event the venue is not defined")
+		html += "<h1>"+newsItem.title +"</h1>\r\n "
 		}
 		
-		html+='</div> \r\n <div class="panel-footer">'
+		html+='<button type="button" onclick="goToEventPage('+newsItem.ID+')">Find out more!</button>';
 
-		if (typeof(event.description)!="undefined")
+		if (typeof(newsItem.summary)!="undefined")
 		{
-		html += "<descriptionOfEvent>"+event.description+"</descriptionOfEvent> <br>\r\n"
+		html += "<summaryOfnewsItem>"+newsItem.summary+"</summaryOfnewsItem> <br>\r\n"
 		}
 		
-		if (typeof(event.date)!="undefined")
+		if (typeof(newsItem.date)!="undefined")
 		{
-		html += "<dateOfEvent>"+event.date+"</dateOfEvent> <br>\r\n"
+		html += "<dateOfnewsItem>"+newsItem.date+"</dateOfnewsItem> <br>\r\n"
 		}
 		
-		if (typeof(event.url)!="undefined")
-		{
-		html += '<a href="'+event.url.substring(0,25)+'">'+event.url.toString()+'...</a> <br>\r\n'
-		}
 		
-		html+="</div>\r\n";
-		html+="</div>\r\n";
-		html+="</div>\r\n"
+		html+="</div></newsItem>\r\n";
 		
 		
 		console.log("we just made this html: "+html)
@@ -193,53 +177,9 @@ $(document).ready(function(){
 	
 	}
 
-	function externalEventToHTML(event)
-	{
-		console.log("converting event")
-		html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
-		
-		if (event.title!="(error: xml property not found)")
-		{
-		html += event.title
-		}
-		
-		html += '</div> \r\n <div class="panel-body">'
-		
-		if (event.img!="(error: xml property not found)")
-		{
-			html+='<img src="'+event.img+'" class="img-responsive" style="width:100%" alt="Image">'
-		}
-		html+='</div> \r\n <div class="panel-footer">'
 
-		if (event.description!="(error: xml property not found)")
-		{
-		html += "<descriptionOfEvent>"+event.description.substring(0,25)+"</descriptionOfEvent> <br>\r\n"
-		}
-		
-		if (event.date!="(error: xml property not found)")
-		{
-		html += "<dateOfEvent>"+event.date.substring(0,25)+"</dateOfEvent> <br>\r\n"
-		}
-		
-		if (event.url!="(error: xml property not found)")
-		{
-		html += '<a href="'+event.url+'">'+event.url.toString().substring(0,25)+'</a> <br>\r\n'
-		}
-		
-		html+="</div>\r\n";
-		html+="</div>\r\n";
-		html+="</div>\r\n";
-		
-		
-		console.log("we just made this html: "+html)
-		return (html);
-		
-	
-	}
-	
-	
-	
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
 	
-}); 
+}
+); 
