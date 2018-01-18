@@ -21,7 +21,7 @@ function goToBlogPage(blog)
 	
 function goToEventPage(event)
 {
-	alert("rex over to you");
+	alert("rex over to you, event id="+event);
     $('#dialog').dialog(
         'option',
         'title',
