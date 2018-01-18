@@ -83,11 +83,12 @@ function authoriseToken(auth_token, ipAddress)
 	sessions[ipAddress]=[auth_token,new Date()];
 }
 
-app.get("/objectPage")
-{
+
+app.get("/objectPage", function(req, resp){
+	console.log("objectPage sent" )
 	resp.sendFile(path.join(__dirname + "/objectPage.html"))
-	
-}
+});
+
 
 
 app.get(baseURL+'/admin', function(req, resp){
