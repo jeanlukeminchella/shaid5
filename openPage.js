@@ -8,8 +8,12 @@ function openPage(pageName,elmnt) {
     tablinks = document.getElementsByClassName("tablink");
     for (i = 0; i < tablinks.length; i++) {
         tablinks[i].style.backgroundColor = "";
+		tablinks[i].style.borderBottomStyle = "none";
+
     }
     document.getElementById(pageName).style.display = "block";
-    elmnt.style.backgroundColor = "rgb(0, 0, 0)";
+    elmnt.style.backgroundColor = "#161616";
+	elmnt.style.borderBottomStyle = "solid";
+	elmnt.style.borderBottomColor = "rgb(65,186,174)";
 
 	}

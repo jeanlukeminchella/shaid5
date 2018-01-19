@@ -59,6 +59,11 @@ app.get(baseURL+"/index.html", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/index.html"))
 });
 
+app.get(baseURL+"/logo.png", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/logo.png"))
+});
+
 app.get(baseURL+"/cleanAdmin.html", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/cleanAdmin.html"))
@@ -67,6 +72,11 @@ app.get(baseURL+"/cleanAdmin.html", function(req, resp){
 app.get(baseURL+"/adminScript.js", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/adminScript.js"))
+});
+
+app.get(baseURL+"/background.jpg", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/background.jpg"))
 });
 
 app.get(baseURL+'/login/validate', function(req, resp){

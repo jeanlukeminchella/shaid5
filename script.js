@@ -178,17 +178,17 @@ $(document).ready(function(){
 	function newsItemToHTML(newsItem)
 	{
 		console.log("converting newsItem")
-		html = '<newsItem class="row"> \r\n '
+		html = '<div id="newsItem" class="row box">'
 		
 		
 		
 		if (typeof(newsItem.image)!="undefined")
 		{
 			
-			html+='<div class="col-sm-3" ><img src="'+newsItem.image+'" width="150" height="150"></div> \r\n';
+			html+='<div class="col-sm-3";"><img src="'+newsItem.image+'" width="100%" height="100%"></div> \r\n';
 			
 		}
-		html+="<b>"+newsItem.type+"</b> - ";
+		html+="<div class='col-sm-9' id='caption'><b>"+newsItem.type+"</b> - ";
 
 		if (typeof(newsItem.title)!="undefined")
 		{
@@ -228,7 +228,7 @@ $(document).ready(function(){
 		html+='<button type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+"'>Find out more!</button><br>";
 		
 		
-		html+="</newsItem>\r\n";
+		html+="</div></div><br>\r\n";
 		
 		
 		console.log("we just made this html: "+html)

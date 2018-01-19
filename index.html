@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%">
 <head>
 <title>SHAID</title>
 <meta charset="utf-8">
@@ -24,10 +24,11 @@
 <div class="container" id="container">
 	
 	<div class="row" id="help">
-		<div class="col-sm-7"></div>
+		<div class="col-sm-1"><img src="/logo.png"></div>
+		<div class="col-sm-6"></div>
 		<div class="col-sm-5">
-			<button class="tablink" onclick="openPage('Home', this)">Home</button>
-			<button class="tablink" onclick="openPage('Newsfeed', this)"  id="defaultOpen" >Newsfeed</button>
+			<button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">Home</button>
+			<button class="tablink" onclick="openPage('Newsfeed', this)">Newsfeed</button>
 			<button class="tablink" onclick="openPage('Services', this)">Services</button>
 			<button class="tablink" onclick="openPage('About', this)">About</button>
 		</div>
@@ -38,16 +39,26 @@
 	
 	<div class="row">
 	<div id="Home" class="tabcontent">
-	  <h3>Home</h3>
+	 <div class="row">
+	 <div class="col-sm-8"></div>
+	<div class="col-sm-2 box"  id="donateBox" >
+	 
+	 
+	<h1 style="text-align:center;">DONATE</h1>
+	<caption style="text-align:centre; width:100%">Urgent appeal</caption><br>
+	<input type="number"></input><br><br>
+	<button>Donate</button><br><br>
+	</div>
+	 </div>
 	  
-	  <div id="createUser">
+	  <div id="createUser" class="box">
 	<div class="row">
 		<div class="col-sm-4">
 		<lb>Email:</lb><br>
 		<lb>New Password:</lb><br>
 		</div>
 		<div class="col-sm-8">
-		<input type="text" id="newUsername" value="newUser1"><br>
+		<input type="text" id="newUsername" value="me@mail.com"><br>
 		<input type="password" id="newPassword"><br>
 		</div>
 	</div>
@@ -72,7 +83,7 @@
 		<br>
 	</div>
 	<br>
-	<div id="login" class="collapse">
+	<div id="login" class="collapse box">
 	<div class="row">
 		<div class="col-sm-4">
 		<lb>Username:</lb><br>
@@ -109,7 +120,7 @@
 
 				<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
 				<br>
-				<div class="collapse" id="search">
+				<div class="collapse box" id="search">
 				<div class="row">
 				
 					<div class="col-sm-4" >
