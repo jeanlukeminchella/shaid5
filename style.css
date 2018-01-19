@@ -126,6 +126,7 @@
 	.button {
     background-color: white; 
     color: black; 
+	border-radius: 20px;
 }
 
 	.button:hover {
@@ -192,16 +193,16 @@
 	#donateBox
 	{
 		
-		height:300px;
-		width:500px;
 		
+		margin:0 auto;
+		text-align:center;
 	}
 	
 	#createUser
 	{
-		position:fixed;
-		bottom:0;
-		width:30%;
+		margin:0 auto;
+		left:40%;
+		width:20%;
 		background-color:black;
 		padding:15px;
 	}
