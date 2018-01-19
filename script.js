@@ -2,6 +2,7 @@
 $(document).ready(function(){
 	var baseURL = ""
 	var objectsToDisplay='{"newsItems":[]}';
+	var headlines='{"newsItems":[]}';
 	console.log("doc ready");
 
 	$("#loginButton").click(function()
@@ -132,6 +133,12 @@ $(document).ready(function(){
 		objectsToDisplay=text;
 	}
 	
+	function setHeadlines(text)
+	{
+		console.log("setting evetns to display as: "+text);
+		headlines=text;
+	}
+	
 
 	
 	/* // this must be in json form {"events":[]}
@@ -170,6 +177,23 @@ $(document).ready(function(){
 		$("#newsList").html(newsAsHTML);
 	}
 	
+	function updateHeadlines()
+	{
+		console.log("updatin news items: "+headlines)
+		var newsItemsAsArray = JSON.parse(headlines).newsItems;
+		var numberOfEvents = newsItemsAsArray.length;
+		
+		
+		
+		var newsAsHTML = "";
+		
+		for (var i = 0 ; i < numberOfEvents ; i++)
+		{
+			newsAsHTML += newsItemToHTML (newsItemsAsArray[i]);
+		}
+		
+		$("#headlines").html(newsAsHTML);
+	}
 	
 	
 	
@@ -225,7 +249,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		html+='<button type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+"'>Find out more!</button><br>";
+		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+"'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";
@@ -237,9 +261,9 @@ $(document).ready(function(){
 	
 	}
 
-
 	// Get the element with id="defaultOpen" and click on it
 	document.getElementById("defaultOpen").click();
+	
 	
 	$.getJSON("/search?amount=20", function(data)
 	{
@@ -253,8 +277,30 @@ $(document).ready(function(){
 			setObjectsToDisplay('{"newsItems":'+JSON.stringify(data.newsItems)+"}");
 			updateNewsfeed();
 		}
-	}
-	)
+	});
+	
+	$.getJSON("/search?amount=3", function(data)
+	{
+		console.log("we got "+JSON.stringify(data)+" from server");
+		if(data.newsItems.length==0)
+		{
+			console.log("No such events!");
+		}
+		else
+		{
+			setHeadlines('{"newsItems":'+JSON.stringify(data.newsItems)+"}");
+			updateHeadlines();
+		}
+	});
+	
+	
+	
+	document.getElementById("sectorOne").style.height=screen.height+"px";
+	document.getElementById("sectorTwo").style.height=screen.height+"px";
+	document.getElementById("sectorOne").style.width=screen.width+"px";
+	document.getElementById("sectorTwo").style.width=screen.width+"px";
+	
+	
 	
 	
 }

@@ -79,6 +79,11 @@ app.get(baseURL+"/background.jpg", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/background.jpg"))
 });
 
+app.get(baseURL+"/background2.jpg", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/background2.jpg"))
+});
+
 app.get(baseURL+'/login/validate', function(req, resp){
 	
 	console.log(req.ip);
@@ -218,6 +223,7 @@ app.get(baseURL+'/search', function(req, res){
 		typeFussy=true;
 		includeCampaigns==(req.query.includeCampaigns=="true");
 	}
+	
 	
 	
 	console.log("include blogs, events, campsign are "+includeBlogs+" "+includeEvents+" "+includeCampaigns);

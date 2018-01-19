@@ -17,20 +17,32 @@
 <script src="script.js"></script>
 <script src="openPage.js"></script>
 <script src="rex.js"></script>
+<script>
+function hideSectorTwo()
+	{
+		document.getElementById("sectorTwo").style.display = "block";
+	}
+	
+	function showSectorTwo()
+	{
+		document.getElementById("sectorTwo").style.display = "none";
+	}
+</script>
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="container" id="container">
-	
+<div id="sectorOne" class="row">
+
 	<div class="row" id="help">
 		<div class="col-sm-1"><img src="/logo.png"></div>
-		<div class="col-sm-6"></div>
-		<div class="col-sm-5">
-			<button class="tablink" onclick="openPage('Home', this)" id="defaultOpen">Home</button>
-			<button class="tablink" onclick="openPage('Newsfeed', this)">Newsfeed</button>
-			<button class="tablink" onclick="openPage('Services', this)">Services</button>
-			<button class="tablink" onclick="openPage('About', this)">About</button>
+		<div class="col-sm-4"></div>
+		<div class="col-sm-7">
+			<button class="tablink" onclick="openPage('Home', this);hideSectorTwo()" id="defaultOpen" style="margin:0px">Home</button>
+			<button class="tablink" onclick="openPage('Newsfeed', this),showSectorTwo()" style="margin:0px">Newsfeed</button>
+			<button class="tablink" onclick="openPage('Services', this),showSectorTwo()" style="margin:0px">Services</button>
+			<button class="tablink" onclick="openPage('About', this),showSectorTwo()" style="margin:0px">About</button>
 		</div>
 	</div>
 	
@@ -47,7 +59,7 @@
 	<h1 style="text-align:center;">DONATE</h1>
 	<caption style="text-align:centre; width:100%">Urgent appeal</caption><br>
 	<input type="number"></input><br><br>
-	<button>Donate</button><br><br>
+	<button class="button">Donate</button><br><br>
 	</div>
 	 </div>
 	  
@@ -65,7 +77,7 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-4"></div>
-		<div class="col-sm-6"><button type="button" id="submitUser">Sign Up to Newsletter</button></div>
+		<div class="col-sm-6"><button class="button" type="button" id="submitUser">Sign Up to Newsletter</button></div>
 	</div>
 	</div>
 	</div>
@@ -75,7 +87,7 @@
 		<div class="col-sm-4">
 		</div>
 		<div class="col-sm-2">
-		<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
+		<button class="button" type="button" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
 		</div>
 		<div class="col-sm-6">
 		</div>
@@ -83,7 +95,10 @@
 		<br>
 	</div>
 	<br>
-	<div id="login" class="collapse box">
+	
+	<div id="login" class="collapse row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4 box">
 	<div class="row">
 		<div class="col-sm-4">
 		<lb>Username:</lb><br>
@@ -97,9 +112,14 @@
 	<br>
 	<div class="row">
 		<div class="col-sm-4"></div>
-		<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
+		<div class="col-sm-6"><button class="button" type="button" id="submitLogin">Login</button></div>
 	</div>
+	
+	
 	</div>
+	<div class="col-sm-4"></div>
+	</div>
+	
 	<br>
 	
 	
@@ -116,9 +136,10 @@
 	
 	<div id="Newsfeed" class="tabcontent">
 		<div id="objectPage" >
-			<div class="col-sm-3" >
+		<div class="col-sm-1" ></div>
+			<div class="col-sm-2" >
 
-				<button type="button" class="btn btn-primary" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+				<button class="button" type="button" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
 				<br>
 				<div class="collapse box" id="search">
 				<div class="row">
@@ -144,7 +165,7 @@
 				<br>
 				</div>
 				<div class="row" >
-					<button type="button" id="submitQuery">Search events</button>
+					<button class="button" type="button" id="submitQuery">Search events</button>
 				</div>
 				
 				</div>
@@ -162,6 +183,26 @@
 	</div>
 	</div>
 	
+</div>
+<div id="sectorTwo" class="row">
+	<div class="row">
+		<div class="col-sm-3" >
+			
+		</div>
+		<div class="col-sm-6" >
+		<div class="sectorHeading" style="color:black">What's Going On</div>
+		</div>
+		<div class="col-sm-3" >
+			
+		</div>
+	</div>
+	<div  class="row">
+		<div class="col-sm-3" ></div>
+		<div class="col-sm-6" id="headlines">
+		</div>
+		<div class="col-sm-3" ></div>
+	</div>
+</div>
 </div>
 </body>
 </html>
