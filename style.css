@@ -81,6 +81,10 @@
 		width:100%;
 	}
 	
+	b
+	{
+		font-size:25px;
+	}
 	
 	lb
 	{
@@ -93,16 +97,12 @@
 	
 	newsItem
 	{
-		font-size:10px;
-	}
-	h1
-	{
-		font-size:12px;
+		font-size:20px;
 	}
 	
 	summaryOfnewsItem
 	{
-		font-size: 4px;
+		font-size: 10px;
 	}
 	
 	searchButton

@@ -6,8 +6,8 @@
 		$("#reset").click(function()
 		{
 			
-			$.post(baseURL+"/resetEvents");
-			$.post(baseURL+"/resetVenues");
+			$.get("/cleanAdmin.html");
+			
 		});
 
 		$("#home").click(function()

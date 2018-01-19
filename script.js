@@ -180,32 +180,55 @@ $(document).ready(function(){
 		console.log("converting newsItem")
 		html = '<newsItem class="row"> \r\n '
 		
+		
+		
 		if (typeof(newsItem.image)!="undefined")
 		{
 			
 			html+='<div class="col-sm-3" ><img src="'+newsItem.image+'" width="150" height="150"></div> \r\n';
 			
 		}
-		html+='<div class="col-sm-1" ></div><div class="col-sm-8" >'
+		html+="<b>"+newsItem.type+"</b> - ";
+
 		if (typeof(newsItem.title)!="undefined")
 		{
-		html += "<h1>"+newsItem.title +"</h1>\r\n "
+		html += newsItem.title +"\r\n <br>"
 		}
 		
-		html+='<button type="button" onclick="goToEventPage('+newsItem.ID+')">Find out more!</button>';
+		
 
 		if (typeof(newsItem.summary)!="undefined")
 		{
 		html += "<summaryOfnewsItem>"+newsItem.summary+"</summaryOfnewsItem> <br>\r\n"
 		}
 		
+		
+		
 		if (typeof(newsItem.date)!="undefined")
 		{
 		html += "<dateOfnewsItem>"+newsItem.date+"</dateOfnewsItem> <br>\r\n"
 		}
 		
+		var curiousFunctionCall = "goTo";
+		if(newsItem.type=="blog")
+		{
+			curiousFunctionCall+="BlogPage(";
+		}
+		else{if(newsItem.type=="campaign")
+		{
+			curiousFunctionCall+="CampaignPage(";
+		}
+		else{if(newsItem.type=="event")
+		{
+			curiousFunctionCall+="EventPage(";
+		}}}
+		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
-		html+="</div></newsItem>\r\n";
+		
+		html+='<button type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+"'>Find out more!</button><br>";
+		
+		
+		html+="</newsItem>\r\n";
 		
 		
 		console.log("we just made this html: "+html)
