@@ -6,7 +6,7 @@
 		$("#reset").click(function()
 		{
 			
-			$.get("/cleanAdmin.html");
+			window.location.assign("/cleanAdmin.html");
 			
 		});
 
@@ -16,25 +16,6 @@
 			
 		}); 		
 		
-		$("#showVenues").click(function()
-		{
-			$.get(baseURL+"/venues",function(data)
-			
-			{
-				var newHtml = "";
-				var venueIDs = Object.keys(data.venues);
-				for (var i =0; i<venueIDs.length; i++)
-				{
-					var venue = data.venues[venueIDs[i]];
-					var venueID = venueIDs[i];
-					newHtml = newHtml + venueToHtml(venueID,venue);
-				}
-				$("#venuesDisplay").html(newHtml);
-			}
-			
-			);
-			
-		});
 		
 		
 		$("#submitCampaign").click(function()
