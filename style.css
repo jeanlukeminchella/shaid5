@@ -126,7 +126,6 @@
 	.button {
     background-color: white; 
     color: black; 
-    border: 2px solid rgb(65,186,174);;
 }
 
 	.button:hover {
