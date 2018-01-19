@@ -41,43 +41,65 @@
 	  <h3>Home</h3>
 	</div>
 
-	<div id="Services" class="tabcontent">
-	  <h3>Services</h3>
+<div id="Services" class="tabcontent">
+	<h3>Services</h3>
+	<div class="row" >
+		<div class="col-sm-4">
+		</div>
+		<div class="col-sm-2">
+		<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
+		</div>
+		<div class="col-sm-6">
+		</div>
+
+		<br>
+	</div>
+	<br>
+	<div id="login" class="collapse">
+	<div class="row">
+		<div class="col-sm-4">
+		<lb>Username:</lb><br>
+		<lb>Password</lb><br>
+		</div>
+		<div class="col-sm-8">
+		<input type="text" id="username" value="admin"><br>
+		<input type="password" id="password"><br>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
+	</div>
+	</div>
+	<br>
+	<div id="createUser">
+	<div class="row">
+		<div class="col-sm-4">
+		<lb>Email:</lb><br>
+		<lb>New Password:</lb><br>
+		</div>
+		<div class="col-sm-8">
+		<input type="text" id="newUsername" value="newUser1"><br>
+		<input type="password" id="newPassword"><br>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-6"><button type="button" id="submitUser">Sign Up to Newsletter</button></div>
+	</div>
+	</div>
+	
 	
 	<iframe id="objectPage" src= "objectPage.html"></iframe>
-	</div>
+</div>
 
 
 	<div id="About" class="tabcontent">
-	  <h3>About</h3>
-	  <p>Who we are and what we do.</p>
-	  <div class="row" >
-					<div class="col-sm-4">
-					</div>
-					<div class="col-sm-2">
-					<button type="button" class="btn btn-primary" id ="loginButton" data-toggle="collapse" data-target="#login">Login</button>
-					</div>
-					<div class="col-sm-6">
-					</div>
-				</div>
-				<br>
-				<div id="login" class="collapse">
-				<div class="row">
-					<div class="col-sm-4">
-					<lb>Username:</lb><br>
-					<lb>Password</lb><br>
-					</div>
-					<div class="col-sm-8">
-					<input type="text" id="username" value="admin"><br>
-					<input type="password" id="password"><br>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="col-sm-6"></div>
-					<div class="col-sm-6"><button type="button" id="submitLogin">Login</button></div>
-				</div>
-				</div>
+		<h3>About</h3>
+		<p>Who we are and what we do.</p>
+		
 	</div>
 	
 	<div id="Newsfeed" class="tabcontent">

@@ -47,7 +47,7 @@
 	<div class="col-sm-12">
 		<div class="jumbotron" >
 		<div class="container text-center">
-			<h1>Admin yo</h1> 
+			<h1>Admin Page</h1> 
 		</div>
 		</div>
 	</div>
@@ -77,19 +77,29 @@
 	</div>
 	<div class="col-sm-3">
 		<div class="col-sm-6">
-			<lb>name<br></lb>
-			<lb>postcode<br></lb>
-			<lb>town<br></lb>
-			<lb>url<br></lb>
-			<lb>icon<br></lb>
+			<lb>ID<br></lb>
+			<lb>title<br></lb>
+			<lb>description<br></lb>
+			<lb>summary<br></lb>
+			<lb>target<br></lb>
+			<lb>date created<br></lb>
+			<lb>expiry date<br></lb>
+			<lb>image location<br></lb>
+			<lb>creatorID<br></lb>
+			<lb>amountDonated<br></lb>
 		</div>
 		<div class="col-sm-6" id="inputs">
-			<input type="text" id="Vname"><br>
-			<input type="text" id="Vpostcode"><br>
-			<input type="text" id="Vtown"><br>
-			<input type="text" id="Vurl"><br>
-			<input type="text" id="Vicon"><br><br>
-			<button id="submitVenue">Add Venue</button>
+			<input type="text" id="CID"><br>
+			<input type="text" id="Ctitle"><br>
+			<input type="text" id="Cdescription"><br>
+			<input type="text" id="Csummary"><br>
+			<input type="number" id="Ctarget" value=0><br>
+			<input type="date" id="CdateCreated"><br>
+			<input type="date" id="CexpiryDate"><br>
+			<input type="text" id="Cimage" value="https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_960_720.jpg"><br>
+			<input type="number" id="CcreatorID" value=1><br>
+			<input type="number" id="CamountDonated" value=0><br>
+			<button id="submitCampaign">Add Campaign</button>
 		</div>
 	</div>
 	<div class="col-sm-4">
@@ -123,154 +133,7 @@
 </body>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script>
-	$(document).ready(function()
-	{
-		var baseURL = "";
-		var auth_token=document.cookie.toString().substring(11);
-		
-		$("#reset").click(function()
-		{
-			
-			$.post(baseURL+"/resetEvents");
-			$.post(baseURL+"/resetVenues");
-		});
+<script src="/adminScript.js">
 
-		$("#home").click(function()
-		{
-			window.location.assign(baseURL+"/");
-			
-		}); 		
-		
-		$("#showVenues").click(function()
-		{
-			$.get(baseURL+"/venues",function(data)
-			
-			{
-				var newHtml = "";
-				var venueIDs = Object.keys(data.venues);
-				for (var i =0; i<venueIDs.length; i++)
-				{
-					var venue = data.venues[venueIDs[i]];
-					var venueID = venueIDs[i];
-					newHtml = newHtml + venueToHtml(venueID,venue);
-				}
-				$("#venuesDisplay").html(newHtml);
-			}
-			
-			);
-			
-		});
-		
-		
-		$("#submitVenue").click(function()
-		{
-			console.log("submitign form");
-			event.preventDefault();
-			var newVenue = {
-				"auth_token":auth_token,
-				"name":$("#Vname").val(),
-				"postcode":$("#Vpostcode").val(),
-				"town":$("#Vtown").val(),
-				"url":$("#Vurl").val(),
-				"icon":$("#Vicon").val()			
-			}
-			
-			url = "/venues/add?"
-				+ "auth_token=" + auth_token + "&"+
-				+ "name=" + newVenue.name +  "&"+
-				+ "postcode="+ newVenue.postcode + "&"
-				+ "town="+ newVenue.town + "&"
-				+ "url="+ newVenue.url + "&"
-				+ "icon="+ newVenue.icon
-				
-			console.log("post url:"+url);
-			$.post(baseURL+url, function(data)
-			{
-			if(data.status=="ok")
-			{
-				alert("submitted!");
-			}	
-			}
-			);
-		}); 
-		
-		$("#submitEvent").click(function()
-		{
-			console.log("submitign form2");
-			event.preventDefault();
-			var newEvent = {
-				"auth_token":auth_token,
-				"event_id":$("#Eevent_id").val(),
-				"title":$("#Etitle").val(),
-				"venue_id":$("#Evenue").val(),
-				"date":$("#Edate").val(),
-				"url":$("#Eurl").val(),
-				"blurb":$("#Eblurb").val()		
-			}
-			
-			url = "/events/add?" 
-				+ "auth_token=" + auth_token +  "&"
-				+ "event_id=" + newEvent.event_id + "&"
-				+ "title="+ newEvent.title + "&"
-				+ "venue_id="+ newEvent.venue_id + "&"
-				+ "date="+ newEvent.date + "&"
-				+ "url=" + newEvent.url + "&"
-				+ "blurb="+ newEvent.blurb
-
-			console.log("post url:"+url);
-			$.post(baseURL+url,"", function(data) {
-			if(data.status=="ok")
-			{
-				alert("submitted!");
-			}			
-			});
-		});
-		
-		function venueToHtml(venue_id, venue)
-		{
-			html = '<div class="col-sm-6"> \r\n <div class="panel panel-primary"> \r\n  <div class="panel-heading">'
-		
-		if (typeof(venue.name)!="undefined")
-		{
-		html += venue.name;
-		}
-		
-		html += '</div> \r\n <div class="panel-body">'
-		
-		
-		html+='<img src="'+venue.icon+'" class="img-responsive" style="width:100%" alt="Image">'
-			
-		html+='</div> \r\n <div class="panel-footer">'
-
-		if (typeof(venue.postcode)!="undefined")
-		{
-		html += venue.postcode+" <br>\r\n"
-		}
-		
-		if (typeof(venue.town)!="undefined")
-		{
-		html += venue.town+" <br>\r\n"
-		}
-		
-		if (typeof(venue.url)!="undefined")
-		{
-		html += '<a href="'+venue.url+'">'+venue.url.toString()+'</a> <br>\r\n'
-		}
-		
-		html+="</div>\r\n";
-		html+="</div>\r\n";
-		html+="</div>\r\n";
-		
-		
-		console.log("we just made this html: "+html)
-		return (html);
-		}
-		
-		
-	}); 
-	
-	
-	
 </script>
 </html>

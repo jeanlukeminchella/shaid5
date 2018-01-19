@@ -5,11 +5,11 @@ var http = require("http");
 var path = require ("path");
 var crypto = require("crypto");
 
-var passwd = "concertina";
+var passwd = "jim";
 var users={};
 var sessions={};
 
-var admin = {"username":"admin","password":"concertina"};
+var admin = {"username":"admin","password":"jim"};
 addUser(admin);
 
 var newsItems={"newsItems":[]};
@@ -33,6 +33,15 @@ function addUser(user)
 	}
 }
 
+app.post("/users/add", function(req, resp){
+	var username = req.query.username;
+	var password = req.query.password;
+	
+	console.log("adding user "+username+" with password "+password )
+	var user = {"username":username,"password":password};
+	addUser(user);
+	
+});
 
 
 console.log('Server running at http://127.0.0.1:8080/');
@@ -48,6 +57,11 @@ app.get("/", function(req, resp){
 app.get(baseURL+"/index.html", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/index.html"))
+});
+
+app.get(baseURL+"/adminScript.js", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/adminScript.js"))
 });
 
 app.get(baseURL+'/login/validate', function(req, resp){
@@ -295,9 +309,25 @@ app.get(baseURL+'/events/get/:ID', function(req, res){
 	res.json({"error": "no such event"});
 });
 
+app.post('/campaigns/add', function(req, res){
+	var nwsItem = 
+	{
+		"ID":req.query.ID,
+		"title":req.query.title,
+		"summary":req.query.summary,
+		"target":req.query.target,
+		"description":req.query.description,
+		"dateCreated":req.query.dateCreated,
+		"type":"campaign",
+		"image":req.query.image
+	}
+	console.log("adding campign "+JSON.stringify(nwsItem));
+	addNewsItem(nwsItem);
+});
+
 app.post(baseURL+'/events/add', function(req, res){
 
-	var content = events;
+	var content = newsItems;
 	var eventsArray = content.events;
 	
 	if(!isAuthorised(req.ip,req.query.auth_token))
@@ -329,9 +359,9 @@ app.post(baseURL+'/events/add', function(req, res){
 		{
 			console.log("adding event"+JSON.stringify(nwsItem));
 			eventsArray.push(nwsItem);
-			content.events=eventsArray;
-			console.log("eventss array is now: "+JSON.stringify(eventsArray));
-			events=content;
+			content.newsItems=eventsArray;
+			console.log("newsItems array is now: "+JSON.stringify(eventsArray));
+			newsItems=content;
 			res.setHeader('Content-Type', 'application/json');
 			res.json({'status' : 'ok'});
 		}
@@ -340,7 +370,12 @@ app.post(baseURL+'/events/add', function(req, res){
 
 });
 
-
+function addNewsItem(item)
+{
+	console.log("adding item"+JSON.stringify(item));
+	newsItems.newsItems.push(item);
+	console.log("newsItems array is now: "+JSON.stringify(newsItems));
+}
 
 app.post(baseURL+'/resetEvents',function(req, res){
 	resetEvents();

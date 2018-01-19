@@ -38,6 +38,20 @@ $(document).ready(function(){
 		});
 	}
 	);
+	
+	$("#submitUser").click(function()
+	{
+		var loginURL = "/users/add?username="+$("#newUsername").val()+"&password="+$("#newPassword").val()
+		
+		$.post(baseURL+loginURL, function(data)
+		{
+			console.log("we tried to create user");
+			alert("User Created!");
+			$("#newUsername").val()="";
+			$("#newPassword").val()="";
+		});
+	}
+	);
 
 	
 	
