@@ -26,9 +26,9 @@ function goToBlogPage(blog)
 	console.log("loading blog "+JSON.stringify(blog));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
-	
+	prevNewsfeed=document.getElementById("objectPage").className="box";
     setObjectPage(
-		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
+		"<div class='row'><div class='col-sm-1'></div><div class='col-sm-10'>"+"<button onclick='location.reload()'>Back</button>"+
 		"<h1>"+blog.title+"</h1><br>"+
         '<p><b>text: </b>' + blog.text + '</p>' +
         '<p><b>summary: </b>' + blog.summary + '</p>' +
@@ -44,6 +44,7 @@ function goToEventPage(event)
 	console.log("loading event "+JSON.stringify(event));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
+	prevNewsfeed=document.getElementById("objectPage").className="box";
 	
     setObjectPage(
 		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
@@ -60,6 +61,7 @@ function goToCampaignPage(campaign)
 	console.log("loading campaign "+JSON.stringify(campaign));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
+	prevNewsfeed=document.getElementById("objectPage").className="box";
 	
     setObjectPage(
 		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
