@@ -249,7 +249,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+"'>Find out more!</button><br>";
+		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+";openPage("+'"Newsfeed"'+", this),showSectorTwo()'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";
@@ -295,10 +295,10 @@ $(document).ready(function(){
 	
 	
 	
-	document.getElementById("sectorOne").style.height=screen.height+"px";
-	document.getElementById("sectorTwo").style.height=screen.height+"px";
-	document.getElementById("sectorOne").style.width=screen.width+"px";
-	document.getElementById("sectorTwo").style.width=screen.width+"px";
+	document.getElementById("sectorOne").style.minHeight=screen.height+"px";
+	document.getElementById("sectorTwo").style.minHeight=screen.height+"px";
+	document.getElementById("sectorOne").style.minWidth=screen.width+"px";
+	document.getElementById("sectorTwo").style.minWidth=screen.width+"px";
 	
 	
 	

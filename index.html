@@ -34,7 +34,7 @@ function hideSectorTwo()
 
 <div class="container" id="container">
 <div id="sectorOne" class="row">
-
+<div class="col-sm-12">
 	<div class="row" id="help">
 		<div class="col-sm-2"><img src="/logo.png" style="padding:25px;"></div>
 		<div class="col-sm-3"></div>
@@ -51,22 +51,22 @@ function hideSectorTwo()
 	
 	<div class="row">
 	<div id="Home" class="tabcontent">
-	 <div class="row">
-	 <div class="col-sm-6"></div>
-	<div class="col-sm-5 box"  id="donateBox" >
-	 
-	 
-	<h1 style="font-size:70px">TACKLING HOMELESSNESS IN DURHAM</h1>
-	<div style="font-size:20px">Rehousing people since 2005- donate now</div><br><br>
-	<input type="number" style="font-size:50px"></input><br><br>
-	<button class="button">Donate</button><br><br>
-	</div>
-	 </div>
-	  
-	  
+		<div class="row">
+			<div class="col-sm-6"></div>
+			<div class="col-sm-5 box"  id="donateBox" >
+				<h1 style="font-size:70px">TACKLING HOMELESSNESS IN DURHAM</h1>
+				<div style="font-size:20px">Rehousing people since 2005- donate now</div><br><br>
+				<input type="number" style="font-size:50px"></input><br><br>
+				<button class="button">Donate</button><br><br>
+			</div>
+		</div>
+		<div class="row">
+		<br><br><br><br>
+		</div>
+
 	</div>
 
-<div id="Services" class="tabcontent">
+	<div id="Services" class="tabcontent">
 	<div class="row" >
 		<div class="col-sm-4">
 		</div>
@@ -118,63 +118,83 @@ function hideSectorTwo()
 		
 	</div>
 	
-	<div id="Newsfeed" class="tabcontent">
-		<div id="objectPage" >
-		<div class="col-sm-1" ></div>
-			<div class="col-sm-2" >
-
-				<button class="button" type="button" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
-				<br>
-				<div class="collapse box" id="search">
-				<div class="row">
-				
-					<div class="col-sm-4" >
-					<lb>Keyword:</lb><br>
-					<lb>After:</lb><br>
-					<lb>Before:</lb><br>
-					<lb>Blogs:</lb><br>
-					<lb>Events:</lb><br>
-					<lb>Campaigns:</lb><br>
+	<div id="Newsfeed" class="tabcontent" style="padding:10px;">
+	<div id="objectPage" >
+		
+		<div class="col-sm-3" >
+			<div class="row">
+				<div class="col-sm-5" ></div>
+				<div class="col-sm-2" >
+					<button class="button" style=" margin: 0 auto;width:100%;" type="button" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+				</div>
+				<div class="col-sm-5" ></div>
+			</div>
+			<br>
+			
+			<div class="row collapse" id="search">
+			<br>
+				<div class="col-sm-2" ></div>
+				<div class="col-sm-8 box">
+					<div class="row ">
 					
-					</div>
-					<div class="col-sm-8">
-					<input type="text" id="keyword"><br>
-					<input type="date" id="dateAfter"><br>
-					<input type="date" id="dateBefore"><br>
-					<input type="checkbox" id="includeBlogs"><br>
-					<input type="checkbox" id="includeEvents"><br>
-					<input type="checkbox" id="includeCampaigns"><br>
-					</div>
-				
-				<br>
-				</div>
-				<div class="row" >
-					<button class="button" type="button" id="submitQuery">Search events</button>
-				</div>
-				
-				</div>
-				
-			</div>
-			<div class="col-sm-6" id="newsList">
+						<div class="col-sm-5" >
+						<lb>Keyword:</lb><br>
+						<lb>After:</lb><br>
+						<lb>Before:</lb><br>
+						<br><br>
+						<lb>Blogs:</lb><br>
+						<lb>Events:</lb><br>
+						<lb>Campaigns:</lb><br>
+						
+						</div>
+						<div class="col-sm-7">
+						<input type="text" id="keyword"><br>
+						<input type="date" id="dateAfter"><br>
+						<input type="date" id="dateBefore"><br>
+						<br>
+						<input type="checkbox" id="includeBlogs"><br>
+						<input type="checkbox" id="includeEvents"><br>
+						<input type="checkbox" id="includeCampaigns"><br>
+						</div>
+					
 
-			</div>
-			<div class="col-sm-3" >
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-2" ></div>
+						<div class="col-sm-8" >
+							<button class="button" type="button" id="submitQuery" style="width:100%;">Search events</button>
+						</div>
+						<div class="col-sm-2" ></div>
+					</div>
 				
+				</div>
+				<div class="col-sm-2" ></div>
 			</div>
 			
 		</div>
+		<div class="col-sm-6" id="newsList">
+
+		</div>
+		<div class="col-sm-3" >
+			
+		</div>
+			
+	</div>
 
 	</div>
 	</div>
 	
 </div>
+</div>
 <div id="sectorTwo" class="row">
+<div class="col-sm-12" >
 	<div class="row">
 		<div class="col-sm-3" >
 			
 		</div>
 		<div class="col-sm-6" >
-		<div class="sectorHeading" style="color:black">What's Going On</div>
+		<div class="sectorHeading" style="color:white;font-weight: bolder;">What's Going On</div>
 		</div>
 		<div class="col-sm-3" >
 			
@@ -212,7 +232,7 @@ function hideSectorTwo()
 	</div>
 	</div>
 	
-
+</div>
 </div>
 </div>
 </body>
