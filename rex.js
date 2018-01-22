@@ -70,8 +70,7 @@ function goToCampaignPage(campaign)
         '<p><b>summary: </b>' + campaign.summary + '</p>' +
         '<img src="' + campaign.image + '" style="height:400px;width:400px">' + 
         '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p></div></div><br><br>'
-		+ "<input type='number' id='donatedMoney'><span><button id='donate' onclick='donate()'>Donate!</button>"
-		+ '<iframe id="objectPage2" src= "objectPage.html"></iframe>'
+		+ "<input type='number' id='donatedMoney'><span><br><button id='donate' onclick='donate()'>Donate!</button>" + "<script src="+"'openPage.js"+"'></script><script src="+"'script.js"+"'></script><script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'><div id=countdown-wrap><div id="+"'goal"+"'>"+campaign.target+"</div><div id="+"'glass"+"'><div id="+"'progress"+"'></div></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>16%</span><span class="+"'goal-label"+"'>Funded</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>"+campaign.amountDonated+"</span><span class="+"'goal-label"+"'>Raised</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'><div id="+"'countdown"+"'></div></span><span class="+"'goal-label"+"'>Days to Go</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>"+daysToGo(campaign.expiryDate)+"</span><span class="+"'goal-label"+"'>Sponsors</span></div></div></div>"
     );
 }
 
@@ -98,4 +97,9 @@ function setObjectPage(htmlIn)
     );
     $('#objectPage').dialog('open');
 } */
+
+function daysToGo(expiryDate)
+{
+	return 38;
+}
  

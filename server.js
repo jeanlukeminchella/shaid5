@@ -452,6 +452,8 @@ function resetEvents()
 						"description":"texttttttttttttttttttttttttttttttt",
 						"summary":"shaid summary",
 						"dateCreated":"2018-05-21T16:00:00Z",
+						"amountDonated":"50.7",
+						"target":"100",
 						
 						"image":"http://www.disused-stations.org.uk/c/consett/consett_old3.jpg",
 						

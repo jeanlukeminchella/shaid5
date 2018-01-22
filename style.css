@@ -1,0 +1,229 @@
+#countdown-wrap {
+  width: 100%;
+  height: 300px;
+  //border: 1px solid black;
+  padding: 20px;
+  font-family: arial;
+  max-width: 650px;
+  margin: 150px auto 300px;
+}
+
+
+#goal {
+  font-size: 48px;
+  text-align: right;
+  color: #FFF;
+  @media only screen and (max-width : 640px) {
+    text-align: center;  
+  }
+  
+}
+
+#glass {
+  width: 100%;
+  height: 20px;
+  background: #c7c7c7;
+  border-radius: 10px;
+  float: left;
+  overflow: hidden;
+}
+
+#progress {
+  float: left;
+  width: 16%;
+  height: 20px;
+  background: #FF5D50;
+  z-index: 333;
+  //border-radius: 5px;
+}
+
+.goal-stat {
+  width: 25%;
+  //height: 30px;
+  padding: 10px;
+  float: left;
+  margin: 0;
+  color: #FFF;
+  
+  @media only screen and (max-width : 640px) {
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.goal-number, .goal-label {
+  display: block;
+}
+
+.goal-number {
+  font-weight: bold;
+}
+
+    .jumbotron 
+	{
+		margin-bottom: 0;
+    }
+	
+	.sectorHeading
+	{
+		font-family:PiSLIETZLindham;
+		text-decoration: underline;
+		color:white;
+		font-weight: bolder;
+		text-align:center;
+		font-size:100px;
+		width:100%;
+	}
+	.sectorSubHeading
+	{
+		font-family:PiSLIETZLindham;
+		color:white;
+		text-align:center;
+		font-size:60px;
+		width:100%;
+		
+	}
+	
+	#sectorOne
+	{
+		background-image:url("/background.jpg");
+	}
+	
+	
+	#sectorTwo
+	{
+		background-image:url("/background2.jpg");
+	}
+	
+	#container
+	{
+		padding:0px;
+		height:100%;
+	}
+	
+	
+	body
+	{
+		height:100%;
+		color:white;
+
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		
+		padding-bottom:60px;
+
+	}
+	
+	button
+	{
+		color:black;
+		background-color: rgb(65,186,174);
+		border: none;
+		padding: 8px 16px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 20px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		cursor: pointer;
+	}
+	
+	.button {
+    background-color: white; 
+    color: black; 
+	border-radius: 20px;
+}
+
+	.button:hover {
+		background-color: rgb(65,186,174);
+	}
+   
+	#container
+	{
+		width:100%;
+	}
+	
+	b
+	{
+		font-size:25px;
+	}
+	
+	lb
+	{
+		float:right;
+		height:24px;
+		width:100%;
+		text-align:right;
+		
+	}
+	
+	#newsItem
+	{
+		font-size:20px;
+		background-color:black;
+		 padding-top: 5px;
+		padding-right: 5px;
+		padding-bottom: 5px;
+		padding-left: 5px;
+	}
+	
+	summaryOfnewsItem
+	{
+		font-size: 15px;
+	}
+
+	
+	input
+	{
+		color:black;
+		
+	}
+	
+	
+	.box
+	{
+		font-family:PiSLIETZLindham;
+		border-top-color:rgb(65,186,174);
+		border-top-style:solid;
+		padding:18px;
+		border-top-width:3px;
+		background-color:black; 
+	}
+	
+	#donateBox
+	{
+		
+		
+		margin:0 auto;
+		text-align:center;
+	}
+	
+	#createUser
+	{
+		margin:0 auto;
+		left:40%;
+		width:20%;
+		background-color:black;
+		padding:15px;
+	}
+	
+	input
+	{
+		width:100px;
+	}
+	
+	.tablink 
+	{
+		background-color: #555;
+		color: white;
+		float: left;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		padding: 14px 16px;
+		font-size: 17px;
+		width: 25%;
+	}

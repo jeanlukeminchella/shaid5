@@ -249,7 +249,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+";openPage("+'"Newsfeed"'+", this),showSectorTwo()'>Find out more!</button><br>";
+		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+";openPage("+'"Newsfeed"'+", this),hideSectorTwo()'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";
