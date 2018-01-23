@@ -56,7 +56,7 @@ function goToEventPage(event)
     );
 }
 
-function goToCampaignPage(campaign)
+/* function goToCampaignPage(campaign)
 {
 	console.log("loading campaign "+JSON.stringify(campaign));
 
@@ -70,7 +70,28 @@ function goToCampaignPage(campaign)
         '<p><b>summary: </b>' + campaign.summary + '</p>' +
         '<img src="' + campaign.image + '" style="height:400px;width:400px">' + 
         '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p></div></div><br><br>'
-		+ "<input type='number' id='donatedMoney'><span><br><button id='donate' onclick='donate()'>Donate!</button>" + "<script src="+"'openPage.js"+"'></script><script src="+"'script.js"+"'></script><script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'><div id=countdown-wrap><div id="+"'goal"+"'>"+campaign.target+"</div><div id="+"'glass"+"'><div id="+"'progress"+"'></div></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>16%</span><span class="+"'goal-label"+"'>Funded</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>"+campaign.amountDonated+"</span><span class="+"'goal-label"+"'>Raised</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'><div id="+"'countdown"+"'></div></span><span class="+"'goal-label"+"'>Days to Go</span></div><div class="+"'goal-stat"+"'><span class="+"'goal-number"+"'>"+daysToGo(campaign.expiryDate)+"</span><span class="+"'goal-label"+"'>Sponsors</span></div></div></div>"
+		+ 
+    );
+} */
+
+function goToCampaignPage(campaign)
+{
+	console.log("loading campaign "+JSON.stringify(campaign));
+
+    prevNewsfeed=document.getElementById("objectPage").innerHTML;
+	prevNewsfeed=document.getElementById("objectPage").className="box";
+	
+    setObjectPage(
+		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
+		"<h1>"+campaign.title+"</h1><br>"+
+        '<p><b>description: </b>' + campaign.description + '</p>' +
+        '<p><b>summary: </b>' + campaign.summary + '</p>' +
+        '<img src="' + campaign.image + '" style="height:400px;width:400px">' + 
+        '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p></div></div><br><br>' +
+		"target, amount = "+campaign.target+" "+campaign.amountDonated+
+		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+campaign.amountDonated+"'aria-valuemin='0' aria-valuemax='"+campaign.target+"' style='width:"+progressPercentage(campaign.amountDonated,campaign.target)+"%'></div></div>"+
+		"<input type='number' id='donatedMoney'><span><br>"+
+		"<button id='donate' onclick='donate()'>Donate!</button>" + "<script src="+"'openPage.js"+"'></script><script src="+"'script.js"+"'></script><script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
     );
 }
 
@@ -98,8 +119,23 @@ function setObjectPage(htmlIn)
     $('#objectPage').dialog('open');
 } */
 
-function daysToGo(expiryDate)
+function progressPercentage(donated, target)
 {
-	return 38;
+	try
+	{
+		var donatedFloat = parseFloat(donated);
+		var targetFloat = parseFloat(target);
+		return (donatedFloat*100/targetFloat);
+	}
+	catch(err)
+	{
+		return 0;
+	}
 }
+
+function donate()
+{
+	
+}
+
  

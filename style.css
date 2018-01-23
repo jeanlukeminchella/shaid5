@@ -51,13 +51,13 @@
   }
 }
 
-.goal-number, .goal-label {
-  display: block;
-}
+	.goal-number, .goal-label {
+	  display: block;
+	}
 
-.goal-number {
-  font-weight: bold;
-}
+	.goal-number {
+	  font-weight: bold;
+	}
 
     .jumbotron 
 	{
@@ -71,7 +71,7 @@
 		color:white;
 		font-weight: bolder;
 		text-align:center;
-		font-size:100px;
+		font-size:5vw;
 		width:100%;
 	}
 	.sectorSubHeading
@@ -79,7 +79,7 @@
 		font-family:PiSLIETZLindham;
 		color:white;
 		text-align:center;
-		font-size:60px;
+		font-size:3vw;
 		width:100%;
 		
 	}
@@ -140,7 +140,19 @@
 	.button:hover {
 		background-color: rgb(65,186,174);
 	}
-   
+	
+	.progress-bar
+	{
+		background-image:none;
+		background-color: rgb(65,186,174);
+	}
+	.progress
+	{
+		width:70%;
+		margin:auto;
+	}
+	
+	
 	#container
 	{
 		width:100%;

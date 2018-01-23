@@ -297,8 +297,6 @@ $(document).ready(function(){
 	
 	document.getElementById("sectorOne").style.minHeight=screen.height+"px";
 	document.getElementById("sectorTwo").style.minHeight=screen.height+"px";
-	document.getElementById("sectorOne").style.minWidth=screen.width+"px";
-	document.getElementById("sectorTwo").style.minWidth=screen.width+"px";
 	
 	
 	
