@@ -59,7 +59,7 @@ function goToEventPage(event)
 		"target, amount = "+event.target+" "+event.amountDonated+
 		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+event.amountDonated+"'aria-valuemin='0' aria-valuemax='"+event.target+"' style='width:"+progressPercentage(event.amountDonated,event.target)+"%'></div></div>"+
 		"<input type='number' id='donatedMoney'><span><br>"+
-		"<button id='donate' onclick='donate("+event.ID+",'event') class='button'>Donate!</button></div></div>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
+		"<button id='donate' style='margin:'onclick='donate("+event.ID+","+'"campaign")'+"'"+' class='+"'button'>Donate!</button></div></div>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
     );
 }
 
@@ -126,7 +126,7 @@ function progressPercentage(donated, target)
 
 function donate(id,type)
 	{
-		alert("$('#donatedMoney').val() is "+$("#donatedMoney").val());
+		// alert("$('#donatedMoney').val() is "+$("#donatedMoney").val());
 		if(type=="event")
 		{
 			$.post("/events/donate?id="+id+"&amount="+$("#donatedMoney").val(), function(data)
