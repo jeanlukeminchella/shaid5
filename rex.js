@@ -55,7 +55,11 @@ function goToEventPage(event)
         '<p><b>description: </b>' + event.description + '</p>' +
         '<p><b>summary: </b>' + event.summary + '</p>' +
         '<img src="' + event.image + '" style="height:400px;width:400px">' + 
-        '<br><p>created by ' + event.creatorID + ' at ' + event.dateCreated + '</p></div></div>'
+        '<br><p>created by ' + event.creatorID + ' at ' + event.dateCreated + '</p><br><br>' + 
+		"target, amount = "+event.target+" "+event.amountDonated+
+		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+event.amountDonated+"'aria-valuemin='0' aria-valuemax='"+event.target+"' style='width:"+progressPercentage(event.amountDonated,event.target)+"%'></div></div>"+
+		"<input type='number' id='donatedMoney'><span><br>"+
+		"<button id='donate' onclick='donate("+event.ID+",'event') class='button'>Donate!</button></div></div>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
     );
 }
 
@@ -74,11 +78,11 @@ function goToCampaignPage(campaign)
         '<p><b>description: </b>' + campaign.description + '</p>' +
         '<p><b>summary: </b>' + campaign.summary + '</p>' +
         '<img src="' + campaign.image + '" style="height:400px;width:400px">' + 
-        '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p></div></div><br><br>' +
+        '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p><br><br>' +
 		"target, amount = "+campaign.target+" "+campaign.amountDonated+
-		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+campaign.amountDonated+"'aria-valuemin='0' aria-valuemax='"+campaign.target+"' style='width:"+progressPercentage(campaign.amountDonated,campaign.target)+"%'></div></div>"+
-		"<input type='number' id='donatedMoney'><span><br>"+
-		"<button id='donate' onclick='donate()' class='button'>Donate!</button>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
+		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+campaign.amountDonated+"'aria-valuemin='0' aria-valuemax='"+campaign.target+"' style='width:"+progressPercentage(campaign.amountDonated,campaign.target)+"%'></div></div><br>"+
+		"<input type='number' id='donatedMoney'><span><br><br>"+
+		"<button id='donate' style='margin:'onclick='donate("+campaign.ID+","+'"campaign")'+"'"+' class='+"'button'>Donate!</button></div></div>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
     );
 }
 
@@ -120,9 +124,31 @@ function progressPercentage(donated, target)
 	}
 }
 
-function donate()
-{
-	
-}
+function donate(id,type)
+	{
+		alert("$('#donatedMoney').val() is "+$("#donatedMoney").val());
+		if(type=="event")
+		{
+			$.post("/events/donate?id="+id+"&amount="+$("#donatedMoney").val(), function(data)
+			{
+				alert("donated! Thanks")
+			});
+		}
+		else
+		{
+			if(type=="campaign")
+			{
+				$.post("/campaigns/donate?id="+id+"&amount="+$("#donatedMoney").val(), function(data)
+				{
+					alert("donated! Thanks")
+				});
+			}
+			else
+			{
+				alert("sorry were not sure what youre donating to");
+			}
+		}
+	}
+
 
  

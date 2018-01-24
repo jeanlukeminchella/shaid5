@@ -419,7 +419,9 @@ function resetEvents()
 						"date":"2018-01-21T16:00:00Z",
 						"image":"https://www.savingadvice.com/images/blog/morning-coffee.jpg",
 						"campaignID":"1",
-						"creatorID":"1"
+						"creatorID":"1",
+						"target":"50",
+						"amountDonated":"10"
 						},
 						{
 						"ID":"1",
