@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="height:100%">
 <head>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet"> 
 <title>SHAID</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -55,9 +56,13 @@ function showSectorTwo()
 			<div class="col-sm-6"></div>
 			<div class="col-sm-5 box"  id="donateBox" >
 				<h1 style="font-size:4vw">TACKLING HOMELESSNESS IN DURHAM</h1>
-				<div style="font-size:1vw">Rehousing people since 2005- donate now</div><br><br>
-				<input type="number" style="font-size:50px"></input><br><br>
-				<button class="button">Donate</button><br><br>
+				<div style="font-size:1vw">Rehousing people since 2005- donate now</div><br>
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="KQEFYRCUPTGEA">
+					<input type="submit" value="Donate" name="submit" title="PayPal - The safer, easier way to pay online!" class="button">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+					</form>
 			</div>
 		</div>
 		<div class="row">
@@ -113,9 +118,15 @@ function showSectorTwo()
 
 
 	<div id="About" class="tabcontent">
-		<h3>About</h3>
-		<p>Who we are and what we do.</p>
 		
+		<div class="row">
+			<div class="col-sm-1" ></div>
+			<div class="col-sm-8" ><h3>About</h3>
+			<p>Who we are and what we do.</p>
+			
+
+			</div>
+		</div>
 	</div>
 	
 	<div id="Newsfeed" class="tabcontent" style="padding:10px;">

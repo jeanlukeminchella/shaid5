@@ -87,17 +87,18 @@
 			<lb>amountDonated<br></lb>
 		</div>
 		<div class="col-sm-6" id="inputs">
-			<input type="text" id="CID"><br>
-			<input type="text" id="Ctitle"><br>
-			<input type="text" id="Cdescription"><br>
-			<input type="text" id="Csummary"><br>
+			<input type="text" id="CID" value="2"><br>
+			<input type="text" id="Ctitle" value="New Campaign"><br>
+			<input type="text" id="Cdescription" value="Brand New description"><br>
+			<input type="text" id="Csummary" value="Summary"><br>
 			<input type="number" id="Ctarget" value=0><br>
-			<input type="date" id="CdateCreated"><br>
-			<input type="date" id="CexpiryDate"><br>
+			<input type="date" id="CdateCreated" value="2018-03-23"><br>
+			<input type="date" id="CexpiryDate" value="2018-04-23"><br>
 			<input type="text" id="Cimage" value="http://chelgate.com/wp-content/uploads/2016/09/campaign-icon-large.png"><br>
 			<input type="number" id="CcreatorID" value=1><br>
 			<input type="number" id="CamountDonated" value=0><br>
 			<button id="submitCampaign">Add Campaign</button>
+			<button onClick="alert(document.getElementById('CdateCreated').value)">what</button>
 		</div>
 	</div>
 	<div class="col-sm-4">
@@ -109,8 +110,8 @@
 	</div>
 	<div class="col-sm-2">
 
-		<button type="button" class="btn btn-primary" id ="home"><span class="glyphicon glyphicon-home"></</button>
-		<button type="button" class="btn btn-primary" id ="reset">Model Version</</button>
+		<button type="button" class="btn btn-primary" id ="home"><span class="glyphicon glyphicon-home"></button>
+		<button type="button" class="btn btn-primary" id ="reset">Model Version</button>
 	</div>
 	<div class="col-sm-5">
 	</div>

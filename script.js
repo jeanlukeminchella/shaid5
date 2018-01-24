@@ -202,17 +202,17 @@ $(document).ready(function(){
 	function newsItemToHTML(newsItem)
 	{
 		console.log("converting newsItem")
-		html = '<div id="newsItem" class="row box">'
+		html = '<div id="newsItem" class="row" style="padding:0px">'
 		
 		
 		
 		if (typeof(newsItem.image)!="undefined")
 		{
 			
-			html+='<div class="col-sm-3";"><img src="'+newsItem.image+'" width="100%" height="100%"></div> \r\n';
+			html+='<div class="col-sm-3" style="padding:0px"><img src="'+newsItem.image+'" width="100%" height="100%" ></div> \r\n';
 			
 		}
-		html+="<div class='col-sm-9' id='caption'><b>"+newsItem.type+"</b> - ";
+		html+="<div class='col-sm-9 box' id='caption'><b>"+newsItem.type+"</b> - ";
 
 		if (typeof(newsItem.title)!="undefined")
 		{
@@ -249,7 +249,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'"+curiousFunctionCall+";openPage("+'"Newsfeed"'+", this),hideSectorTwo()'>Find out more!</button><br>";
+		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'openPage("+'"Newsfeed"'+", this);hideSectorTwo();"+curiousFunctionCall+"'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";

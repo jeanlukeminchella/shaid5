@@ -26,9 +26,11 @@ function goToBlogPage(blog)
 	console.log("loading blog "+JSON.stringify(blog));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
-	prevNewsfeed=document.getElementById("objectPage").className="box";
+	document.getElementById("sectorOne").style.backgroundImage="none";
+	document.getElementById("sectorOne").style.backgroundColor="rgb(224,244,242)";
+	
     setObjectPage(
-		"<div class='row'><div class='col-sm-1'></div><div class='col-sm-10'>"+"<button onclick='location.reload()'>Back</button>"+
+		"<div class='row object'><div class='col-sm-1'></div><div class='col-sm-10'>"+"<button onclick='location.reload()' class='button'>Back</button>"+
 		"<h1>"+blog.title+"</h1><br>"+
         '<p><b>text: </b>' + blog.text + '</p>' +
         '<p><b>summary: </b>' + blog.summary + '</p>' +
@@ -44,10 +46,11 @@ function goToEventPage(event)
 	console.log("loading event "+JSON.stringify(event));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
-	prevNewsfeed=document.getElementById("objectPage").className="box";
+	document.getElementById("sectorOne").style.backgroundImage="none";
+	document.getElementById("sectorOne").style.backgroundColor="rgb(224,244,242)";
 	
     setObjectPage(
-		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
+		"<div class='row object'><div class='col-sm-1'></div><div class='col-sm-10'>"+"<button onclick='location.reload()' class='button'>Back</button>"+
 		"<h1>"+event.title+"</h1><br>"+
         '<p><b>description: </b>' + event.description + '</p>' +
         '<p><b>summary: </b>' + event.summary + '</p>' +
@@ -56,33 +59,17 @@ function goToEventPage(event)
     );
 }
 
-/* function goToCampaignPage(campaign)
-{
-	console.log("loading campaign "+JSON.stringify(campaign));
-
-    prevNewsfeed=document.getElementById("objectPage").innerHTML;
-	prevNewsfeed=document.getElementById("objectPage").className="box";
-	
-    setObjectPage(
-		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
-		"<h1>"+campaign.title+"</h1><br>"+
-        '<p><b>description: </b>' + campaign.description + '</p>' +
-        '<p><b>summary: </b>' + campaign.summary + '</p>' +
-        '<img src="' + campaign.image + '" style="height:400px;width:400px">' + 
-        '<br><p>created by ' + campaign.creatorID + ' at ' + campaign.dateCreated + '</p></div></div><br><br>'
-		+ 
-    );
-} */
 
 function goToCampaignPage(campaign)
 {
 	console.log("loading campaign "+JSON.stringify(campaign));
 
     prevNewsfeed=document.getElementById("objectPage").innerHTML;
-	prevNewsfeed=document.getElementById("objectPage").className="box";
+	document.getElementById("sectorOne").style.backgroundImage="none";
+	document.getElementById("sectorOne").style.backgroundColor="rgb(224,244,242)";
 	
     setObjectPage(
-		"<div class='row'><div class='col-sm-3'></div><div class='col-sm-9'>"+"<button onclick='location.reload()'>Back</button>"+
+		"<div class='row object'><div class='col-sm-1'></div><div class='col-sm-10'>"+"<button onclick='location.reload()' class='button'>Back</button>"+
 		"<h1>"+campaign.title+"</h1><br>"+
         '<p><b>description: </b>' + campaign.description + '</p>' +
         '<p><b>summary: </b>' + campaign.summary + '</p>' +
@@ -91,7 +78,7 @@ function goToCampaignPage(campaign)
 		"target, amount = "+campaign.target+" "+campaign.amountDonated+
 		"<div class='progress' ><div class='progress-bar' role='progressbar' aria-valuenow='"+campaign.amountDonated+"'aria-valuemin='0' aria-valuemax='"+campaign.target+"' style='width:"+progressPercentage(campaign.amountDonated,campaign.target)+"%'></div></div>"+
 		"<input type='number' id='donatedMoney'><span><br>"+
-		"<button id='donate' onclick='donate()'>Donate!</button>" + "<script src="+"'openPage.js"+"'></script><script src="+"'script.js"+"'></script><script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
+		"<button id='donate' onclick='donate()' class='button'>Donate!</button>" + "<script src="+"'rex.js"+"'></script><link rel="+"'stylesheet"+"' href="+"'style.css"+"'>"
     );
 }
 

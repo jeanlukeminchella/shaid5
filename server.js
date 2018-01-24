@@ -417,7 +417,7 @@ function resetEvents()
 						"summary":"Pancakes if youre lucky",
 						"dateCreated":"2018-05-21T16:00:00Z",
 						"date":"2018-01-21T16:00:00Z",
-						"image":"https://static.pexels.com/photos/248797/pexels-photo-248797.jpeg",
+						"image":"https://www.savingadvice.com/images/blog/morning-coffee.jpg",
 						"campaignID":"1",
 						"creatorID":"1"
 						},
