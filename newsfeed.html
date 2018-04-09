@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+<head>
+<link href="https://fonts.googleapis.com/css?family=Fira+Sans" rel="stylesheet"> 
+<title>SHAID</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+  
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="script.js"></script>
+<script src="openPage.js"></script>
+<script src="rex.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="container" id="container">
+<div id="sectorOne" class="row">
+<div class="col-sm-12">
+	<div class="row" id="help">
+		<div class="col-sm-2"><img src="/logo.png" style="padding:25px;"></div>
+		<div class="col-sm-3"></div>
+		<div class="col-sm-7">
+			<button class="tablink" onclick="openPage('index.html', this)" id="defaultOpen" style="margin:0px">Home</button>
+			<button class="tablink" onclick="openPage('newsfeed.html', this)" style="margin:0px">Newsfeed</button>
+			<button class="tablink" onclick="openPage('services.html', this)" style="margin:0px">Services</button>
+			<button class="tablink" onclick="openPage('about.html', this)" style="margin:0px">About</button>
+		</div>
+	</div>
+	
+	<br>
+<div id="Newsfeed" class="tabcontent" style="padding:10px;">
+	<div id="objectPage" >
+		
+		<div class="col-sm-3" >
+			<div class="row">
+				<div class="col-sm-5" ></div>
+				<div class="col-sm-2" >
+					<button class="button" style=" margin: 0 auto;width:100%;" type="button" id ="searchButton" data-toggle="collapse" data-target="#search"><span class="glyphicon glyphicon-search"></span></button>
+				</div>
+				<div class="col-sm-5" ></div>
+			</div>
+			<br>
+			
+			<div class="row collapse" id="search">
+			<br>
+				<div class="col-sm-2" ></div>
+				<div class="col-sm-8 box">
+					<div class="row ">
+					
+						<div class="col-sm-5" >
+						<lb>Keyword:</lb><br>
+						<lb>After:</lb><br>
+						<lb>Before:</lb><br>
+						<br><br>
+						<lb>Blogs:</lb><br>
+						<lb>Events:</lb><br>
+						<lb>Campaigns:</lb><br>
+						
+						</div>
+						<div class="col-sm-7">
+						<input type="text" id="keyword"><br>
+						<input type="date" id="dateAfter"><br>
+						<input type="date" id="dateBefore"><br>
+						<br>
+						<input type="checkbox" id="includeBlogs"><br>
+						<input type="checkbox" id="includeEvents"><br>
+						<input type="checkbox" id="includeCampaigns"><br>
+						</div>
+					
+
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-sm-2" ></div>
+						<div class="col-sm-8" >
+							<button class="button" type="button" id="submitQuery" style="width:100%;">Search events</button>
+						</div>
+						<div class="col-sm-2" ></div>
+					</div>
+				
+				</div>
+				<div class="col-sm-2" ></div>
+			</div>
+			
+		</div>
+		<div class="col-sm-6" id="newsList">
+
+		</div>
+		<div class="col-sm-3" >
+			
+		</div>
+			
+	</div>
+
+	</div>
+	</div>
+	</div>
+</div>
+</body>
+</html>

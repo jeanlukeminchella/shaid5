@@ -1,6 +1,8 @@
 
 function openPage(pageName,elmnt) {
-    var i, tabcontent, tablinks;
+	
+	window.location.href = "./"+pageName;
+    /* var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
@@ -14,6 +16,6 @@ function openPage(pageName,elmnt) {
     document.getElementById(pageName).style.display = "block";
     elmnt.style.backgroundColor = "#161616";
 	elmnt.style.borderBottomStyle = "solid";
-	elmnt.style.borderBottomColor = "rgb(65,186,174)";
+	elmnt.style.borderBottomColor = "rgb(65,186,174)"; */
 
 	}

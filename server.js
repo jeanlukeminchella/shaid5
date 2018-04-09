@@ -22,7 +22,6 @@ function addUser(user)
 {
 	try
 	{
-
 		users[user.username]=user.password;
 		console.log("user list now goes:"+JSON.stringify(users));
 	}
@@ -50,11 +49,6 @@ console.log('Server running at http://127.0.0.1:8080/');
 
 
 app.get("/", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/index.html"))
-});
-
-app.get(baseURL+"/index.html", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/index.html"))
 });
@@ -143,7 +137,22 @@ app.get("/openPage.js", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/openPage.js"))
 });
 
-
+app.get("/index.html", function(req, resp){
+	console.log("index.html sent" )
+	resp.sendFile(path.join(__dirname + "/index.html"))
+});
+app.get("/newsfeed.html", function(req, resp){
+	console.log("newsfeed sent" )
+	resp.sendFile(path.join(__dirname + "/newsfeed.html"))
+});
+app.get("/services.html", function(req, resp){
+	console.log("services sent" )
+	resp.sendFile(path.join(__dirname + "/services.html"))
+});
+app.get("/about.html", function(req, resp){
+	console.log("objectPage sent" )
+	resp.sendFile(path.join(__dirname + "/about.html"))
+});
 
 app.get(baseURL+'/admin', function(req, resp){
 	if(isAuthorised(req.ip,req.query.auth_token))
@@ -307,7 +316,7 @@ app.get(baseURL+'/search', function(req, res){
 		"newsItems":validNewsItems
 	}
 	
-	console.log("sending "+JSON.stringify(eventsListAsJSON))
+	//console.log("sending "+JSON.stringify(eventsListAsJSON))
 	
 	res.set('content-type', 'application/json');
 	res.json(eventsListAsJSON);
