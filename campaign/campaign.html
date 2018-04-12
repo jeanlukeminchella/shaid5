@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Web Programming Assignment">
+    <meta name="author" content="">
+
+    <title>Shaid</title>
+    <!-- Bootstrap CSS library -->
+    <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/3.3/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    
+    <style>
+      div.media button {
+        visibility: hidden;
+      }
+      div.media:hover button {
+        visibility: visible;
+      }
+      .btn-file {
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+      }
+      #img-upload{
+        width: 100%;
+      }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/index.html">Home</a></li>
+            <li role="presentation"><a id="admin" href="javascript:void(0);">Admin</a></li>
+            <li role="presentation"><a id="event" href="javascript:void(0);">Event</a></li>
+            <li role="presentation" class="active"><a href="">Campaign</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Campaign</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Campaign Page</h1>
+        <p class="lead">hello!</p>
+      </div>
+      
+      
+      <div class="row marketing">
+        <h3>
+          Campaign List &nbsp;
+          <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#campaignModal">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Create New Campaign
+          </button>
+        </h3>
+        <hr>
+        <div id="campaign"></div>
+      </div>
+      
+      
+      
+      <div id="campaignModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Create Campaign</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="campaign-id">ID</label>
+                <input type="text" class="form-control" id="campaign-id" placeholder="Campaign ID">
+              </div>
+              <div class="form-group">
+                <label for="campaign-title">Title</label>
+                <input type="text" class="form-control" id="campaign-title" placeholder="Campaign Title">
+              </div>
+              <div class="form-group">
+                <label for="campaign-description">Description</label>
+                <input type="text" class="form-control" id="campaign-description" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="campaign-summary">Summary</label>
+                <input type="text" class="form-control" id="campaign-summary" placeholder="Summary">
+              </div>
+              <div class="form-group">
+                  <label>Upload Image</label>
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                              Browse Image <input type="file" id="imgInp">
+                          </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
+                  </div>
+                  <img id='img-upload'>
+              </div>
+              <div class="form-group">
+                <label for="campaign-image">Or Paste Image Url</label>
+                <input type="text" class="form-control" id="campaign-image" placeholder="Image Url">
+              </div>
+              <div class="form-group">
+                <label for="campaign-start">Start Time</label>
+                <input type="text" class="form-control" id="campaign-start" placeholder="Start Time">
+              </div>
+              <div class="form-group">
+                <label for="campaign-expired">Expired Time</label>
+                <input type="text" class="form-control" id="campaign-expired" placeholder="Expired Time">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="campaign-submit" type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="campaignModalEdit" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Edit Campaign</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="campaign-id-edit">ID</label>
+                <input type="text" class="form-control" id="campaign-id-edit" placeholder="Campaign ID" readonly>
+              </div>
+              <div class="form-group">
+                <label for="campaign-title-edit">Title</label>
+                <input type="text" class="form-control" id="campaign-title-edit" placeholder="Campaign Title" readonly>
+              </div>
+              <div class="form-group">
+                <label for="campaign-description-edit">Description</label>
+                <input type="text" class="form-control" id="campaign-description-edit" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="campaign-summary-edit">Summary</label>
+                <input type="text" class="form-control" id="campaign-summary-edit" placeholder="Summary" readonly>
+              </div>
+              <div class="form-group">
+                <label for="campaign-image-edit">Image Url</label>
+                <input type="text" class="form-control" id="campaign-image-edit" placeholder="Image Url" readonly>
+              </div>
+              <div class="form-group">
+                <label for="campaign-start-edit">Start Time</label>
+                <input type="text" class="form-control" id="campaign-start-edit" placeholder="Start Time" readonly>
+              </div>
+              <div class="form-group">
+                <label for="campaign-expired-edit">Expired Time</label>
+                <input type="text" class="form-control" id="campaign-expired-edit" placeholder="Expired Time">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="campaign-submit-edit" type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <br><br>
+    
+      <footer class="footer">
+        <p>&copy; Campaign Page - Shaid</p>
+      </footer>
+    </div>
+    
+    <!-- Jquery library -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Jquery Cookie Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <!-- Bootstrap JS library -->
+    <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/campaign/campaign.js"></script>
+  </body>
+</html>

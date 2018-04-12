@@ -1,0 +1,42 @@
+{
+  "1": {
+    "ID": "1",
+    "type": "event",
+    "title": "Coffee Morning on the Cathedral",
+    "description": "Local coffe morning ran by locals to help fund furniture",
+    "summary": "Pancakes if youre lucky",
+    "dateCreated": "2018-05-21T16:00:00Z",
+    "date": "2018-01-21T16:00:00Z",
+    "image": "https://www.savingadvice.com/images/blog/morning-coffee.jpg",
+    "campaignID": "1",
+    "creatorID": "1",
+    "target": "50",
+    "amountDonated": "10",
+    "byAdmin": true
+  },
+  "2": {
+    "ID": "2",
+    "type": "event",
+    "title": "test",
+    "description": "Local coffe morning ran by locals to help fund furniture",
+    "summary": "Pancakes if youre lucky",
+    "dateCreated": "2018-05-21T16:00:00Z",
+    "date": "2018-01-21T16:00:00Z",
+    "image": "https://www.savingadvice.com/images/blog/morning-coffee.jpg",
+    "campaignID": "1",
+    "creatorID": "1",
+    "target": "50",
+    "amountDonated": "10"
+  },
+  "3": {
+    "ID": "3",
+    "byAdmin": "false",
+    "type": "event",
+    "title": "test event",
+    "description": "",
+    "summary": "",
+    "image": "http://www.disused-stations.org.uk/c/consett/consett_old3.jpg",
+    "dateCreated": "",
+    "expired": ""
+  }
+}

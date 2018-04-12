@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Web Programming Assignment">
+    <meta name="author" content="">
+
+    <title>Shaid</title>
+    <!-- Bootstrap CSS library -->
+    <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/3.3/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    
+    <style>
+      div.media button {
+        visibility: hidden;
+      }
+      div.media:hover button {
+        visibility: visible;
+      }
+      .btn-file {
+        position: relative;
+        overflow: hidden;
+      }
+      .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+      }
+      #img-upload{
+        width: 100%;
+      }
+      #img-upload-edit{
+        width: 100%;
+      }
+      #img-upload-published{
+        width: 100%;
+      }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="/index.html">Home</a></li>
+            <li role="presentation"><a id="admin" href="javascript:void(0);">Admin</a></li>
+            <li role="presentation" class="active"><a href="">Event</a></li>
+            <li role="presentation"><a id="campaign" href="javascript:void(0);">Campaign</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Event</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Event Page</h1>
+        <p class="lead">hello!</p>
+      </div>
+      
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active"><a href="#published" aria-controls="fade " role="tab" data-toggle="tab">Published</a></li>
+          <li role="presentation"><a href="#drafts" aria-controls="drafts" role="tab" data-toggle="tab">Drafts</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="published">
+            <div class="row marketing">
+              <h3>
+                Published Event List &nbsp;
+                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#eventModalPublished">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  Create New Event
+                </button>
+              </h3>
+              <hr>
+              <div id="event-published"></div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="drafts">
+            <div class="row marketing">
+              <h3>
+                Draft Event List &nbsp;
+                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#eventModal">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  Create New Draft
+                </button>
+              </h3>
+              <hr>
+              <div id="event-draft"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      <div id="eventModalPublished" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Create Event</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="event-id-published">ID</label>
+                <input type="text" class="form-control" id="event-id-published" placeholder="Event ID">
+              </div>
+              <div class="form-group">
+                <label for="event-title-published">Title</label>
+                <input type="text" class="form-control" id="event-title-published" placeholder="Event Title">
+              </div>
+              <div class="form-group">
+                <label for="event-description-published">Description</label>
+                <input type="text" class="form-control" id="event-description-published" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="event-summary-published">Summary</label>
+                <input type="text" class="form-control" id="event-summary-published" placeholder="Summary">
+              </div>
+              <div class="form-group">
+                  <label>Upload Image</label>
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                              Browse Image <input type="file" id="imgInp-published">
+                          </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
+                  </div>
+                  <img id='img-upload-published'>
+              </div>
+              <div class="form-group">
+                <label for="event-image-published">Or Paste Image Url</label>
+                <input type="text" class="form-control" id="event-image-published" placeholder="Image Url">
+              </div>
+              <div class="form-group">
+                <label for="event-start-published">Start Time</label>
+                <input type="text" class="form-control" id="event-start-published" placeholder="Start Time">
+              </div>
+              <div class="form-group">
+                <label for="event-expired-published">Expired Time</label>
+                <input type="text" class="form-control" id="event-expired-published" placeholder="Expired Time">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="event-submit-published" type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="eventModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Create Event Draft</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="event-id">ID</label>
+                <input type="text" class="form-control" id="event-id" placeholder="Event ID">
+              </div>
+              <div class="form-group">
+                <label for="event-title">Title</label>
+                <input type="text" class="form-control" id="event-title" placeholder="Event Title">
+              </div>
+              <div class="form-group">
+                <label for="event-description">Description</label>
+                <input type="text" class="form-control" id="event-description" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="event-summary">Summary</label>
+                <input type="text" class="form-control" id="event-summary" placeholder="Summary">
+              </div>
+              <div class="form-group">
+                  <label>Upload Image</label>
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                              Browse Image <input type="file" id="imgInp">
+                          </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
+                  </div>
+                  <img id='img-upload'>
+              </div>
+              <div class="form-group">
+                <label for="event-image">Or Paste Image Url</label>
+                <input type="text" class="form-control" id="event-image" placeholder="Image Url">
+              </div>
+              <div class="form-group">
+                <label for="event-start">Start Time</label>
+                <input type="text" class="form-control" id="event-start" placeholder="Start Time">
+              </div>
+              <div class="form-group">
+                <label for="event-expired">Expired Time</label>
+                <input type="text" class="form-control" id="event-expired" placeholder="Expired Time">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="event-submit" type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="eventModalEdit" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Edit Event</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="event-id-edit">ID</label>
+                <input type="text" class="form-control" id="event-id-edit" placeholder="Event ID">
+              </div>
+              <div class="form-group">
+                <label for="event-title-edit">Title</label>
+                <input type="text" class="form-control" id="event-title-edit" placeholder="Event Title">
+              </div>
+              <div class="form-group">
+                <label for="event-description-edit">Description</label>
+                <input type="text" class="form-control" id="event-description-edit" placeholder="Description">
+              </div>
+              <div class="form-group">
+                <label for="event-summary-edit">Summary</label>
+                <input type="text" class="form-control" id="event-summary-edit" placeholder="Summary">
+              </div>
+              <div class="form-group">
+                  <label>Upload Image</label>
+                  <div class="input-group">
+                      <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                              Browse Image <input type="file" id="imgInp-edit">
+                          </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
+                  </div>
+                  <img id='img-upload-edit'>
+              </div>
+              <div class="form-group">
+                <label for="event-image-edit">Or Paste Image Url</label>
+                <input type="text" class="form-control" id="event-image-edit" placeholder="Image Url">
+              </div>
+              <div class="form-group">
+                <label for="event-start-edit">Start Time</label>
+                <input type="text" class="form-control" id="event-start-edit" placeholder="Start Time">
+              </div>
+              <div class="form-group">
+                <label for="event-expired-edit">Expired Time</label>
+                <input type="text" class="form-control" id="event-expired-edit" placeholder="Expired Time">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="event-submit-edit" type="button" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <br><br>
+    
+      <footer class="footer">
+        <p>&copy; Event Page - Shaid</p>
+      </footer>
+    </div>
+    
+    <!-- Jquery library -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Jquery Cookie Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <!-- Bootstrap JS library -->
+    <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/event/event.js"></script>
+  </body>
+</html>
