@@ -18,10 +18,183 @@ var newsItems={"newsItems":[]};
 var baseURL = "";
 
 
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(express.json());
+app.use(express.urlencoded());
+
+app.get(baseURL + "/admin/admin.html", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/admin/admin.html"))
+});
+
+app.get(baseURL + "/admin/admin.js", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/admin/admin.js"))
+});
+
+app.get(baseURL + "/event/event.html", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/event/event.html"))
+});
+
+app.get(baseURL + "/event/event.js", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/event/event.js"))
+});
+
+app.get(baseURL + "/campaign/campaign.html", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/campaign/campaign.html"))
+});
+
+app.get(baseURL + "/campaign/campaign.js", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/campaign/campaign.js"))
+});
+
+
+var lowdb = require('lowdb');
+var FileSync = require('lowdb/adapters/FileSync');
+
+var eventAdapter = new FileSync('./event/event.json');
+var eventdb = lowdb(eventAdapter);
+
+var campaignAdapter = new FileSync('./campaign/campaign.json');
+var campaigndb = lowdb(campaignAdapter);
+
+app.get(baseURL + "/event/data", function(req, res) {
+  res.json(eventdb.__wrapped__);
+});
+
+app.post(baseURL + "/event/data", function(req, res) {
+  var op = req.body.op;
+  var data = req.body.data;
+  if (op == 'create') {
+    var id = data.ID;
+    if (typeof id == undefined) {
+      var max = -1;
+      for (k in eventdb.__wrapped__) {
+        var num = parseInt(k);
+        if (num > max) {
+          max = num;
+        }
+      }
+      id = max + 1;
+      id = id.toString();
+    }
+    data.ID = id;
+    eventdb.set(id, data).write();
+    res.json({
+      'result': 0
+    });
+  } else if (op == 'edit') {
+    var id = data.ID;
+    if (eventdb.has(id).value()) {
+      eventdb.set(id, data).write();
+      res.json({'result': 0});
+    } else {
+      res.json({
+        'result': -1,
+        'message': 'ID does not exist!'
+      });
+    }
+  } else if (op == 'delete') {
+    var id = data.ID;
+    if (eventdb.has(id).value()) {
+      eventdb.unset(id).write();
+      res.json({'result': 0});
+    } else {
+      res.json({
+        'result': -1,
+        'message': 'ID does not exist!'
+      });
+    }
+  } else if (op == 'publish') {
+    var id = data.ID;
+    if (eventdb.has(id).value()) {
+      eventdb.set(`${id}.byAdmin`, true).write();
+      res.json({'result': 0});
+    } else {
+      res.json({
+        'result': -1,
+        'message': 'ID does not exist!'
+      });
+    }
+  } else {
+    res.json({
+        'result': -2,
+        'message': 'Unknown operation!'
+      });
+  }
+});
+
+app.get(baseURL + "/campaign/data", function(req, res) {
+  res.json(campaigndb.__wrapped__);
+});
+
+app.post(baseURL + "/campaign/data", function(req, res) {
+  var op = req.body.op;
+  var data = req.body.data;
+  if (op == 'create') {
+    var id = data.ID;
+    if (typeof id == undefined) {
+      var max = -1;
+      for (k in campaigndb.__wrapped__) {
+        var num = parseInt(k);
+        if (num > max) {
+          max = num;
+        }
+      }
+      id = max + 1;
+      id = id.toString();
+    }
+    data.ID = id;
+    campaigndb.set(id, data).write();
+    res.json({
+      'result': 0
+    });
+  } else if (op == 'edit') {
+    var id = data.ID;
+    if (campaigndb.has(id).value()) {
+      campaigndb.set(id, data).write();
+      res.json({'result': 0});
+    } else {
+      res.json({
+        'result': -1,
+        'message': 'ID does not exist!'
+      });
+    }
+  } else if (op == 'delete') {
+    var id = data.ID;
+    if (campaigndb.has(id).value()) {
+      campaigndb.unset(id).write();
+      res.json({'result': 0});
+    } else {
+      res.json({
+        'result': -1,
+        'message': 'ID does not exist!'
+      });
+    }
+  } else {
+    res.json({
+        'result': -2,
+        'message': 'Unknown operation!'
+      });
+  }
+});
+
+
+
+
+
+
+
+
+
+
 function addUser(user)
 {
 	try
 	{
+
 		users[user.username]=user.password;
 		console.log("user list now goes:"+JSON.stringify(users));
 	}
@@ -49,6 +222,11 @@ console.log('Server running at http://127.0.0.1:8080/');
 
 
 app.get("/", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/index.html"))
+});
+
+app.get(baseURL+"/index.html", function(req, resp){
 	console.log("homepage sent" )
 	resp.sendFile(path.join(__dirname + "/index.html"))
 });
@@ -137,28 +315,13 @@ app.get("/openPage.js", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/openPage.js"))
 });
 
-app.get("/index.html", function(req, resp){
-	console.log("index.html sent" )
-	resp.sendFile(path.join(__dirname + "/index.html"))
-});
-app.get("/newsfeed.html", function(req, resp){
-	console.log("newsfeed sent" )
-	resp.sendFile(path.join(__dirname + "/newsfeed.html"))
-});
-app.get("/services.html", function(req, resp){
-	console.log("services sent" )
-	resp.sendFile(path.join(__dirname + "/services.html"))
-});
-app.get("/about.html", function(req, resp){
-	console.log("objectPage sent" )
-	resp.sendFile(path.join(__dirname + "/about.html"))
-});
+
 
 app.get(baseURL+'/admin', function(req, resp){
 	if(isAuthorised(req.ip,req.query.auth_token))
 	{
 		console.log("admin sent" )
-		resp.sendFile(path.join(__dirname + "/admin.html"))
+		resp.sendFile(path.join(__dirname + "/admin/admin.html"))
 	}
 	else
 	{
@@ -316,7 +479,7 @@ app.get(baseURL+'/search', function(req, res){
 		"newsItems":validNewsItems
 	}
 	
-	//console.log("sending "+JSON.stringify(eventsListAsJSON))
+	console.log("sending "+JSON.stringify(eventsListAsJSON))
 	
 	res.set('content-type', 'application/json');
 	res.json(eventsListAsJSON);
@@ -472,6 +635,20 @@ function resetEvents()
 						}
 	]}
 	;
+  
+  /*
+   *
+   * New code to read event and campaign from database then append to index
+   *
+  */
+  
+  for (k in eventdb.__wrapped__) {
+    newsItems.newsItems.push(eventdb.__wrapped__[k]);
+  }
+  
+  for (k in campaigndb.__wrapped__) {
+    newsItems.newsItems.push(campaigndb.__wrapped__[k]);
+  }
 	
 	// fs.writeFile('events.json', fs.readFileSync("eventsCopy.JSON"), 'utf8');
 	
@@ -522,7 +699,6 @@ app.listen(port,function()
 {
 	console.log("app running"+port);
 });
-
 
 
 
