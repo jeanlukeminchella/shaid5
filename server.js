@@ -50,7 +50,7 @@ app.get(baseURL + "/campaign/campaign.js", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/campaign/campaign.js"))
 });
 
-
+/*
 var lowdb = require('lowdb');
 var FileSync = require('lowdb/adapters/FileSync');
 
@@ -182,7 +182,7 @@ app.post(baseURL + "/campaign/data", function(req, res) {
 });
 
 
-
+*/
 
 
 
@@ -636,11 +636,11 @@ function resetEvents()
 	]}
 	;
   
-  /*
-   *
+  
+   /*
    * New code to read event and campaign from database then append to index
    *
-  */
+  
   
   for (k in eventdb.__wrapped__) {
     newsItems.newsItems.push(eventdb.__wrapped__[k]);
@@ -651,7 +651,7 @@ function resetEvents()
   }
 	
 	// fs.writeFile('events.json', fs.readFileSync("eventsCopy.JSON"), 'utf8');
-	
+	*/
 }
 
 
