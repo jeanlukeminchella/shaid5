@@ -26,6 +26,38 @@ app.use(bodyParser.urlencoded({
 app.use(express.json());
 app.use(express.urlencoded());
 
+// page sending
+
+
+app.get("/", function(req, resp){
+	
+	resp.sendFile(path.join(__dirname + "/home.html"))
+});
+
+app.get(baseURL + "/home.html", function(req, resp){
+	resp.sendFile(path.join(__dirname + "/home.html"))
+	console.log("homepage sent" )
+});
+
+app.get(baseURL + "/newsfeed.html", function(req, resp){
+	console.log("newsfeed sent" )
+	resp.sendFile(path.join(__dirname + "/newsfeed.html"))
+});
+
+app.get(baseURL + "/services.html", function(req, resp){
+	console.log("services sent" )
+	resp.sendFile(path.join(__dirname + "/services.html"))
+});
+
+app.get(baseURL + "/about.html", function(req, resp){
+	console.log("about sent" )
+	resp.sendFile(path.join(__dirname + "/about.html"))
+});
+
+
+// admin stuff ( needs security -> )
+// admin page request : window.location.assign(baseURL+"/admin/admin?auth_token="+newAuthToken);
+
 app.get(baseURL + "/admin/admin.html", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/admin/admin.html"))
 });
@@ -46,8 +78,27 @@ app.get(baseURL + "/campaign/campaign.html", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/campaign/campaign.html"))
 });
 
-app.get(baseURL + "/campaign/campaign.js", function(req, resp){
-	resp.sendFile(path.join(__dirname + "/campaign/campaign.js"))
+
+// files
+app.get(baseURL+"/logo.png", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/logo.png"))
+});
+
+app.get(baseURL+"/background.jpg", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/background.jpg"))
+});
+
+app.get(baseURL+"/background2.jpg", function(req, resp){
+	console.log("homepage sent" )
+	resp.sendFile(path.join(__dirname + "/background2.jpg"))
+});
+
+app.get(baseURL+'/login/validate', function(req, resp){
+	
+	console.log(req.ip);
+	resp.json({"isValid":isAuthorised(req.ip,req.query.auth_token)});
 });
 
 /*
@@ -221,46 +272,7 @@ console.log('Server running at http://127.0.0.1:8080/');
 
 
 
-app.get("/", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/index.html"))
-});
 
-app.get(baseURL+"/index.html", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/index.html"))
-});
-
-app.get(baseURL+"/logo.png", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/logo.png"))
-});
-
-app.get(baseURL+"/cleanAdmin.html", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/cleanAdmin.html"))
-});
-
-app.get(baseURL+"/adminScript.js", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/adminScript.js"))
-});
-
-app.get(baseURL+"/background.jpg", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/background.jpg"))
-});
-
-app.get(baseURL+"/background2.jpg", function(req, resp){
-	console.log("homepage sent" )
-	resp.sendFile(path.join(__dirname + "/background2.jpg"))
-});
-
-app.get(baseURL+'/login/validate', function(req, resp){
-	
-	console.log(req.ip);
-	resp.json({"isValid":isAuthorised(req.ip,req.query.auth_token)});
-});
 
 /* app.get('/login', function(req, resp){
 	console.log("login sent" )

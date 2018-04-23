@@ -14,10 +14,22 @@ $(document).ready(function(){
 		{
 			if (data.isValid)
 			{
-				window.location.assign(baseURL+"/admin?auth_token="+lastAuth_token);
+				goToWebPage(admin,lastAuth_token);
 			}
 		});
 	});
+	
+	function goToWebPage(pageName, auth_token)
+	{
+		if (auth_token == undefined)
+		{
+			window.location.assign(baseURL+"/"+pageName);
+		}
+		else
+		{
+			window.location.assign(baseURL+"/"+pageName+"?auth_token="+auth_token);
+		}
+	}
 	
 	$("#submitLogin").click(function()
 	{
@@ -30,7 +42,7 @@ $(document).ready(function(){
 			if(typeof(newAuthToken)!="undefined")
 			{
 				document.cookie="auth_token="+newAuthToken;
-				window.location.assign(baseURL+"/admin?auth_token="+newAuthToken);
+				window.location.assign(baseURL+"/admin/admin?auth_token="+newAuthToken);
 			}
 			else
 			{
@@ -53,6 +65,8 @@ $(document).ready(function(){
 		});
 	}
 	);
+	
+	
 
 	
 	
@@ -249,7 +263,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		html+='<button class="button" type="button" style="font-size:10px" onclick='+"'openPage("+'"Newsfeed"'+", this);hideSectorTwo();"+curiousFunctionCall+"'>Find out more!</button><br>";
+		//html+='<button class="button" type="button" style="font-size:10px" onclick='+"'openPage("+'"Newsfeed"'+", this);hideSectorTwo();"+curiousFunctionCall+"'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";
@@ -261,8 +275,7 @@ $(document).ready(function(){
 	
 	}
 
-	// Get the element with id="defaultOpen" and click on it
-	document.getElementById("defaultOpen").click();
+
 	
 	
 	$.getJSON("/search?amount=20", function(data)
@@ -293,10 +306,12 @@ $(document).ready(function(){
 		}
 	});
 	
+	document.getElementById("homeButton").addEventListener("click", goToWebPage("home.html"));
+	document.getElementById("newsButton").addEventListener("click", goToWebPage("newsfeed.html"));
+	document.getElementById("servicesButton").addEventListener("click",goToWebPage("services.html"));
+	document.getElementById("aboutButton").addEventListener("click",goToWebPage("about.html"));
 	
 	
-	document.getElementById("sectorOne").style.minHeight=screen.height+"px";
-	document.getElementById("sectorTwo").style.minHeight=screen.height+"px";
 	
 	
 	// rex bit

@@ -16,21 +16,19 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="script.js"></script>
-<script src="openPage.js"></script>
-<script src="rex.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <div class="container" id="container">
 <div id="sectorOne" class="row">
 <div class="col-sm-12">
-	<div class="row" id="help">
+	<div class="row">
 		<div class="col-sm-2"><img src="/logo.png" style="padding:25px;"></div>
 		<div class="col-sm-3"></div>
 		<div class="col-sm-7">
-			<button class="tablink" onclick="openPage('index.html', this)" id="defaultOpen" style="margin:0px">Home</button>
-			<button class="tablink" onclick="openPage('newsfeed.html', this)" style="margin:0px">Newsfeed</button>
-			<button class="tablink" onclick="openPage('services.html', this)" style="margin:0px">Services</button>
-			<button class="tablink" onclick="openPage('about.html', this)" style="margin:0px">About</button>
+			<button class="tablink" id="homeButton" style="margin:0px">Home</button>
+			<button class="opentablink" id="newsButton" style="margin:0px">Newsfeed</button>
+			<button class="tablink" id="servicesButton" style="margin:0px">Services</button>
+			<button class="tablink" id="aboutButton" style="margin:0px">About</button>
 		</div>
 	</div>
 	
