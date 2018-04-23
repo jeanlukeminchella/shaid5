@@ -1,16 +1,16 @@
 
 $(document).ready(function(){
-	var baseURL = ""
 	var objectsToDisplay='{"newsItems":[]}';
 	var headlines='{"newsItems":[]}';
 	console.log("doc ready");
 
 	$("#loginButton").click(function()
 	{
+		alert("login clicked");
 		var cookie = document.cookie;
 		var lastAuth_token = cookie.replace("auth_token=","");
 		var lastAuth_tokenValid=false
-		$.getJSON(baseURL+"/login/validate?auth_token="+lastAuth_token, function(data)
+		$.getJSON("/login/validate?auth_token="+lastAuth_token, function(data)
 		{
 			if (data.isValid)
 			{
@@ -19,30 +19,20 @@ $(document).ready(function(){
 		});
 	});
 	
-	function goToWebPage(pageName, auth_token)
-	{
-		if (auth_token == undefined)
-		{
-			window.location.assign(baseURL+"/"+pageName);
-		}
-		else
-		{
-			window.location.assign(baseURL+"/"+pageName+"?auth_token="+auth_token);
-		}
-	}
+	
 	
 	$("#submitLogin").click(function()
 	{
 		var loginURL = "/login/authenticate?username="+$("#username").val()+"&password="+$("#password").val()
 		
-		$.post(baseURL+loginURL, function(data)
+		$.post(loginURL, function(data)
 		{
 			console.log("we tried to login this is what we got: "+JSON.stringify(data));
 			var newAuthToken = data.auth_token;
 			if(typeof(newAuthToken)!="undefined")
 			{
 				document.cookie="auth_token="+newAuthToken;
-				window.location.assign(baseURL+"/admin/admin?auth_token="+newAuthToken);
+				window.location.assign("/admin/admin?auth_token="+newAuthToken);
 			}
 			else
 			{
@@ -56,7 +46,7 @@ $(document).ready(function(){
 	{
 		var loginURL = "/users/add?username="+$("#newUsername").val()+"&password="+$("#newPassword").val()
 		
-		$.post(baseURL+loginURL, function(data)
+		$.post(loginURL, function(data)
 		{
 			console.log("we tried to create user");
 			alert("User Created!");
@@ -124,7 +114,7 @@ $(document).ready(function(){
 			console.log("sending GET Request "+queryString);
 			
 			
-			$.getJSON(baseURL+queryString, function(data)
+			$.getJSON(queryString, function(data)
 			{
 				console.log("we got "+JSON.stringify(data)+" from server");
 				if(data.newsItems.length==0)
@@ -263,7 +253,7 @@ $(document).ready(function(){
 		curiousFunctionCall+=JSON.stringify(newsItem)+")";
 		
 		
-		//html+='<button class="button" type="button" style="font-size:10px" onclick='+"'openPage("+'"Newsfeed"'+", this);hideSectorTwo();"+curiousFunctionCall+"'>Find out more!</button><br>";
+		//html+='<button class="button" type="button" style="font-size:10px" ;"+curiousFunctionCall+"'>Find out more!</button><br>";
 		
 		
 		html+="</div></div><br>\r\n";
@@ -305,13 +295,11 @@ $(document).ready(function(){
 			updateHeadlines();
 		}
 	});
-	
+	/*
 	document.getElementById("homeButton").addEventListener("click", goToWebPage("home.html"));
-	document.getElementById("newsButton").addEventListener("click", goToWebPage("newsfeed.html"));
 	document.getElementById("servicesButton").addEventListener("click",goToWebPage("services.html"));
 	document.getElementById("aboutButton").addEventListener("click",goToWebPage("about.html"));
-	
-	
+	*/
 	
 	
 	// rex bit
@@ -382,6 +370,7 @@ function goToEventPage(event)
 }
 
 
+	
 function goToCampaignPage(campaign)
 {
 	console.log("loading campaign "+JSON.stringify(campaign));
@@ -469,7 +458,21 @@ function donate(id,type)
 	}
 
 
- 
+
+
+
+
+}); 
+
+function goToWebPage(pageName)
+	{
+		window.location.assign("/"+pageName);
+	}
 	
-}
-); 
+
+ function goToWebPage(pageName, auth_token)
+	{
+		
+			window.location.assign("/"+pageName+"?auth_token="+auth_token);
+		
+	}

@@ -322,11 +322,6 @@ app.get("/style.css", function(req, resp){
 	resp.sendFile(path.join(__dirname + "/style.css"))
 });
 
-app.get("/openPage.js", function(req, resp){
-	console.log("objectPage sent" )
-	resp.sendFile(path.join(__dirname + "/openPage.js"))
-});
-
 
 
 app.get(baseURL+'/admin', function(req, resp){
@@ -491,7 +486,7 @@ app.get(baseURL+'/search', function(req, res){
 		"newsItems":validNewsItems
 	}
 	
-	console.log("sending "+JSON.stringify(eventsListAsJSON))
+	//console.log("sending "+JSON.stringify(eventsListAsJSON))
 	
 	res.set('content-type', 'application/json');
 	res.json(eventsListAsJSON);
